@@ -1,0 +1,1 @@
+Add all global components that pages will access, any components spesific to a page should be within a components folder of that page
