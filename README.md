@@ -1,12 +1,32 @@
-# React + Vite
+# Heavy Duty Drivers Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A ReactJS Weather Application catered to heavy-duty drivers.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React.js
+- Javascript & JSX
 
-## Expanding the ESLint configuration
+## Install Instructions
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/09jayy/Heavy-Duty-Drivers-Weather-App
+cd Heavy-Duty-Drivers-Weather-App
+npm install
+npm run dev
+```
+
+## Contributions
+
+### Instructions
+
+1. Clone repo to local machine
+1. Create a new **local branch** using `git branch <feature-to-implement>`
+1. Include well documented commit messages within your branch
+1. Push your branch to the remote repository using `git push -u origin <branch-name>`
+1. Navigate to the [GitHub page](https://github.com/09jayy/Heavy-Duty-Drivers-Weather-App) and create a new pull request
+
+## To-Do
+
+- [ ] Create inital elements on home page
+- [ ] Create inital elements on extended weather page
