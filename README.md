@@ -4,7 +4,7 @@ A ReactJS Weather Application catered to heavy-duty drivers.
 
 ## Tech Stack
 
-- React.js
+- Vite + ReactJS
 - Javascript & JSX
 
 ## Install Instructions
