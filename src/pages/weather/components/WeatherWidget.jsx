@@ -1,18 +1,30 @@
 import React from 'react'; 
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { SearchModal } from './SearchModal';
 
 export const WeatherWidget = ({weatherData = null}) => {
-    console.log(weatherData); 
+    const [showSearchModal, setShowSearchModal] = useState(false);  
     return (
-        <div style={{backgroundColor: 'transparent', border: '2px solid blue'}} onClick={() => !weatherData && console.log('click')}>
-            {weatherData === null ? (
-                <p>+</p>
-            ) : (
-                <p>
-                    {weatherData.location}
-                    {weatherData.temp}
+        <div>
+        {weatherData === null ? (
+            <>
+                <p onClick={() => { 
+                    setShowSearchModal(true); 
+                    console.log('search'); 
+                }}>
+                    +
                 </p>
-            )
-            }
-        </div>
+                {showSearchModal && createPortal(
+                    <SearchModal onClose={()=>setShowSearchModal(false)}/>,
+                    document.body
+                )}
+            </>
+        ) : (
+            <p>
+                {weatherData.location} - {weatherData.temp}°C
+            </p>
+        )}
+    </div>
     )
 }
