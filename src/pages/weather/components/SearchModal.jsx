@@ -7,6 +7,8 @@ export const SearchModal = ({onClose}) => {
             <div className='modal-content'>
                 <button onClick={onClose}>X</button>
                 Search Modal
+                <input/>
+                <button onClick={onClose}>Add</button>
             </div>
         </div>
     )
