@@ -1,7 +1,7 @@
 import React from 'react'; 
 import './SearchModal.css'
 
-export const SearchModal = ({onClose}) => {
+export const SearchModal = ({onClose, onSubmit}) => {
     return (
         <div className='modal-overlay'>
             <div className='modal-content'>
