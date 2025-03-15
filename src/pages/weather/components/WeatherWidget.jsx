@@ -1,13 +1,32 @@
-import React from 'react'; 
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { SearchModal } from './SearchModal';
+import React, { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
+import { SearchModal } from "./SearchModal";
+import { fetchWeather } from "../../../functions/fetchWeather";
+import axios from "axios";
 
-export const WeatherWidget = ({weatherData = null}) => {
+export const WeatherWidget = ({city = null}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);  
+    const [weatherData, setWeatherData] = useState({});
+
+    const fetchData = useCallback(async () => {
+        if (!city) return; 
+
+        try {
+            const data = await fetchWeather(city);
+            console.log(data); 
+            setWeatherData(data);
+        } catch (error) {
+            console.error("Error fetching weather:", error);
+        }
+    }, [city]); 
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]); 
+
     return (
         <div>
-        {weatherData === null ? (
+        {city === null ? (
             <>
                 <p onClick={() => { 
                     setShowSearchModal(true); 
@@ -22,7 +41,8 @@ export const WeatherWidget = ({weatherData = null}) => {
             </>
         ) : (
             <p>
-                {weatherData.location} - {weatherData.temp}°C
+                {weatherData.name}
+                {weatherData.main?.temp}
             </p>
         )}
     </div>

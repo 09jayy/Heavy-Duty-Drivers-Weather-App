@@ -1,5 +1,6 @@
 import React, {useState} from 'react'; 
 import { WeatherWidget } from './components/WeatherWidget';
+import { fetchWeather } from '../../functions/fetchWeather';
 import './Weather.css'; 
 
 /**
@@ -7,13 +8,13 @@ import './Weather.css';
  * @returns JSX
  */
 export const WeatherPage = () => {
-    const [weatherLocData, setWeatherLocData] = useState([{location: 'london', temp: 50}]) 
+    const [locations, setLocations] = useState(['london']) 
 
     return (
         <div id='container'>
             {
-                weatherLocData.map((weather,index) => (
-                    <WeatherWidget key={index} weatherData={weather}/>
+                locations.map((location,index) => (
+                    <WeatherWidget key={index} city={location}/>
                 ))
             }
             <WeatherWidget/>
