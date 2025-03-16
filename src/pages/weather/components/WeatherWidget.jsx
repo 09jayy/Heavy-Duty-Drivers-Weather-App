@@ -109,8 +109,8 @@ export const WeatherWidget = ({ index, city = null, onAddLocation = () => {}, on
             </span>
           </div>
         </div>
-        <div className={'trash-container'} onClick={onDeleteLocation}>
-          <Trash2 className='w-5 h-5 m-4 trash'/>
+        <div className={'trash-container'}>
+          <Trash2 className='w-5 h-5 m-4 trash' onClick={onDeleteLocation}/>
         </div>
       </div>
     );
