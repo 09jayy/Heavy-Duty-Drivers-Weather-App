@@ -194,6 +194,15 @@ body {
   color: var(--text-color);
 }
 
+.trash-container {
+  display: flex; 
+  justify-content: end;
+}
+
+.trash {
+  color: var(--accent-color)
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .weather-info {
