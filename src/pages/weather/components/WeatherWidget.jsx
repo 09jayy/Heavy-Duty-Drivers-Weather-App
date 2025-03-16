@@ -4,7 +4,7 @@ import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2 } from "lucide-react";
 
-export const WeatherWidget = ({ city = null, onAddLocation = () => {} }) => {
+export const WeatherWidget = ({ index, city = null, onAddLocation = () => {}, onDeleteLocation = () => {}}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [weatherData, setWeatherData] = useState({});
   
@@ -109,7 +109,7 @@ export const WeatherWidget = ({ city = null, onAddLocation = () => {} }) => {
             </span>
           </div>
         </div>
-        <div className={'trash-container'} onClick={() => console.log('delete click')}>
+        <div className={'trash-container'} onClick={onDeleteLocation}>
           <Trash2 className='w-5 h-5 m-4 trash'/>
         </div>
       </div>
