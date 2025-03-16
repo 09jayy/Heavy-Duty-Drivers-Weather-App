@@ -4,7 +4,7 @@ import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2 } from "lucide-react";
 
-export const WeatherWidget = ({ index, city = null, onAddLocation = () => {}, onDeleteLocation = () => {}}) => {
+export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLocation = () => {}}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [weatherData, setWeatherData] = useState({});
   
