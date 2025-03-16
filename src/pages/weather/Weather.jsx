@@ -1,4 +1,4 @@
-import React, {useState} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import { WeatherWidget } from './components/WeatherWidget';
 import { fetchWeather } from '../../functions/fetchWeather';
 import './Weather.css'; 
@@ -8,7 +8,11 @@ import './Weather.css';
  * @returns JSX
  */
 export const WeatherPage = () => {
-    const [locations, setLocations] = useState(['london']) 
+    const [locations, setLocations] = useState(['london']); 
+
+    const addLocation = (newLocation) => {
+        setLocations((prev) => [...prev, newLocation]); 
+    }
 
     return (
         <div id='container'>
@@ -17,7 +21,7 @@ export const WeatherPage = () => {
                     <WeatherWidget key={index} city={location}/>
                 ))
             }
-            <WeatherWidget/>
+            <WeatherWidget onAddLocation={addLocation}/>
         </div>
     )
 }

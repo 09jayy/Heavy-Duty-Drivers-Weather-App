@@ -4,20 +4,16 @@ import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import axios from "axios";
 
-export const WeatherWidget = ({city = null}) => {
+export const WeatherWidget = ({city = null, onAddLocation = () => {}}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);  
     const [weatherData, setWeatherData] = useState({});
 
     const fetchData = useCallback(async () => {
         if (!city) return; 
 
-        try {
-            const data = await fetchWeather(city);
-            console.log(data); 
-            setWeatherData(data);
-        } catch (error) {
-            console.error("Error fetching weather:", error);
-        }
+        const data = await fetchWeather(city); 
+
+        (data != null) ? setWeatherData(data) : console.error('error: city not recgonised');  
     }, [city]); 
 
     useEffect(() => {
@@ -35,7 +31,7 @@ export const WeatherWidget = ({city = null}) => {
                     +
                 </p>
                 {showSearchModal && createPortal(
-                    <SearchModal onClose={()=>setShowSearchModal(false)}/>,
+                    <SearchModal onClose={()=>setShowSearchModal(false)} onSubmit={onAddLocation}/>,
                     document.body
                 )}
             </>
