@@ -1,22 +1,138 @@
 .modal-overlay {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5); 
+    right: 0;
+    bottom: 0;
+    background-color: rgba(27, 38, 59, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-}
-
-
-.modal-content {
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .modal-content {
+    width: 90%;
+    max-width: 420px;
+    background-color: #E0E1DD;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #415A77;
+    color: #E0E1DD;
+  }
+  
+  .modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .close-button {
+    background: transparent;
+    border: none;
+    color: #E0E1DD;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  
+  .close-button:hover {
+    background-color: rgba(224, 225, 221, 0.2);
+  }
+  
+  .modal-body {
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    position: relative;
-    min-width: 300px;
-}
+  }
+  
+  .location-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid #778DA9;
+    background-color: white;
+    font-size: 16px;
+    color: #1B263B;
+    transition: all 0.2s;
+  }
+  
+  .location-input:focus {
+    outline: none;
+    border-color: #415A77;
+    box-shadow: 0 0 0 2px rgba(65, 90, 119, 0.2);
+  }
+  
+  .location-input::placeholder {
+    color: #778DA9;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 20px;
+    gap: 12px;
+    border-top: 1px solid rgba(119, 141, 169, 0.2);
+  }
+  
+  .cancel-button, .add-button {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    color: #415A77;
+    border: 1px solid #415A77;
+  }
+  
+  .cancel-button:hover {
+    background-color: rgba(65, 90, 119, 0.1);
+  }
+  
+  .add-button {
+    background-color: #415A77;
+    color: #E0E1DD;
+    border: none;
+  }
+  
+  .add-button:hover {
+    background-color: #1B263B;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
