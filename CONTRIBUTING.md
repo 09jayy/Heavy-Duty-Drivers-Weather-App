@@ -20,9 +20,10 @@
 
 ### Drivers Weather Page
 
-- [ ] Create inital elements and HTMX Structure of page
-- [ ] Create the shared component for weather for each location
+- [x] Create inital elements and HTMX Structure of page
+- [ ] The page is correctly styled using CSS according to the FIGMA Design
+- [x] Create the shared component for weather for each location
 - [ ] Component for location based weather:
-  - [ ] New component can be added
+  - [x] New component can be added
   - [ ] Component can be deleted
   - [ ] List of components can be reordered (Optional/till last)
