@@ -36,10 +36,20 @@ export const WeatherWidget = ({city = null, onAddLocation = () => {}}) => {
                 )}
             </>
         ) : (
-            <p>
-                {weatherData.name}
-                {weatherData.main?.temp}
-            </p>
+            <div>
+                <p>
+                    {weatherData.name}
+                </p>
+                <p>
+                    {weatherData.main?.temp}°C
+                </p>
+                <p>
+                    H {weatherData.main?.temp_min}°C
+                </p>
+                <p>
+                    L {weatherData.main?.temp_max}°C
+                </p>
+            </div>
         )}
     </div>
     )
