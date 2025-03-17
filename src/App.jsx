@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Home } from './pages/home/Home';
 import { WeatherPage } from './pages/weather/Weather';
-// import './App.css';
+import { Alerts } from './pages/alerts/Alerts';
+import { NavBar } from './components/Navbar/NavBar';
+import './App.css';
 
 /**
  * Handles global layout and routes to other pages/components
@@ -10,20 +13,33 @@ import { WeatherPage } from './pages/weather/Weather';
  */
 
 const App = () => {
+  /** @type {'home' | 'weather' | 'alerts'} */
+  const [curPage, setCurPage] = useState('weather'); 
+
+  const renderPage = ()=>{
+    switch(curPage) {
+      case 'home':
+        return <Home/>
+
+      case 'weather':
+        return <WeatherPage/>
+
+      case 'alerts':
+        return <Alerts/>
+
+      default: 
+        return <Home/>
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-[#0D1B2A]">
-      <header className="py-8 bg-gradient-to-r from-[#1B263B] to-[#273B54] shadow-lg">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl font-bold text-center text-[#E0E1DD] mb-2">
-            Weather Dashboard
-          </h1>
-          <p className="text-[#778DA9] text-center max-w-xl mx-auto">
-            Get real-time weather updates for your favorite locations around the world
-          </p>
-        </div>
+    <div className="root-container">
+      <header>
+        <NavBar changePage={setCurPage}/>
       </header>
+
       <main>
-        <WeatherPage />
+        {renderPage()} 
       </main>
     </div>
   );

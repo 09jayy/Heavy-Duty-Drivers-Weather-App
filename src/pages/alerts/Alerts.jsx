@@ -1,9 +1,9 @@
 import React from 'react'; 
 
-export const Home = () => {
+export const Alerts = () => {
     return (
         <div>
-            <p>Home page</p>
+            <p>Alerts page</p>
         </div>
     ); 
 }
