@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Home } from './pages/home/Home';
 import { WeatherPage } from './pages/weather/Weather';
+import { Alerts } from './pages/alerts/Alerts';
 import { NavBar } from './components/Navbar/NavBar';
 import './App.css';
 
@@ -11,14 +13,33 @@ import './App.css';
  */
 
 const App = () => {
+  /** @type {'home' | 'weather' | 'alerts'} */
+  const [curPage, setCurPage] = useState('weather'); 
+
+  const renderPage = ()=>{
+    switch(curPage) {
+      case 'home':
+        return <Home/>
+
+      case 'weather':
+        return <WeatherPage/>
+
+      case 'alerts':
+        return <Alerts/>
+
+      default: 
+        return <Home/>
+    }
+  }
+
   return (
     <div className="root-container">
       <header>
-        <NavBar/>
+        <NavBar changePage={setCurPage}/>
       </header>
 
       <main>
-        <WeatherPage />
+        {renderPage()} 
       </main>
     </div>
   );

@@ -2,21 +2,18 @@ import React, {useState} from 'react';
 import {House, CloudSun, TriangleAlert} from 'lucide-react'; 
 import './NavBar.css'; 
 
-export const NavBar = () => {
-    /** @type {'home' | 'weather' | 'alerts'} */
-    const [curPage, setCurPage] = useState('home'); 
-
+export const NavBar = ({changePage}) => {
     return (
         <div className='navbar-container'>
-            <button onClick={()=>setCurPage('home')}>
+            <button onClick={()=>changePage('home')}>
                 <House/>
             </button>
 
-            <button onClick={()=>setCurPage('weather')}>
+            <button onClick={()=>changePage('weather')}>
                 <CloudSun/>
             </button>
 
-            <button onClick={()=>setCurPage('alerts')}>
+            <button onClick={()=>changePage('alerts')}>
                 <TriangleAlert/>
             </button>
         </div>
