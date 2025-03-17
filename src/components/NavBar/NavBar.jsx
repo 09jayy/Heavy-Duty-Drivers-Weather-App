@@ -5,16 +5,16 @@ import './NavBar.css';
 export const NavBar = ({changePage}) => {
     return (
         <div className='navbar-container'>
-            <button onClick={()=>changePage('home')}>
-                <House/>
+            <button className='navbar-btn' onClick={()=>changePage('home')}>
+                <House className='navbar-icon'/>
             </button>
 
-            <button onClick={()=>changePage('weather')}>
-                <CloudSun/>
+            <button className='navbar-btn' onClick={()=>changePage('weather')}>
+                <CloudSun className='navbar-icon'/>
             </button>
 
-            <button onClick={()=>changePage('alerts')}>
-                <TriangleAlert/>
+            <button className='navbar-btn' onClick={()=>changePage('alerts')}>
+                <TriangleAlert className='navbar-icon'/>
             </button>
         </div>
     ); 
