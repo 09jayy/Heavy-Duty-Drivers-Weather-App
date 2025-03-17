@@ -112,21 +112,21 @@ export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLo
 
         <div className='actions'>
           <div className='move-arrows'>
-            <div className='left-right-arrows'>
-              <ArrowLeft/>
-              <ArrowRight/>
+            <div className='ml-5 w-10 h-10 left-right-arrows'>
+              <ArrowLeft className='bright-hover'/>
+              <ArrowRight className="bright-hover"/>
             </div>
 
-            <div className='up-down-arrows'>
-              <ArrowUp/>
-              <ArrowDown/>
+            <div className='ml-2 w-10 h-10 up-down-arrows'>
+              <ArrowUp className="bright-hover"/>
+              <ArrowDown className="bright-hover"/>
             </div>
           </div>
 
-          <div className={'trash-container'}>
-            <Trash2 className='w-5 h-5 m-4 trash' onClick={onDeleteLocation}/>
+            <div className='trash-container'>
+              <Trash2 className='w-5 h-5 mr-4 bright-hover' onClick={onDeleteLocation}/>
+            </div>
           </div>
         </div>
-      </div>
     );
   };
