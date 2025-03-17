@@ -217,17 +217,18 @@ body {
   display: flex; 
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 
 .actions {
   display: flex;
-  align-items: center;
+  align-items: center; 
   justify-content: space-between;
-  color: var(--accent-color)
+  color: var(--accent-color); 
 }
 
 .trash:hover{
-  filter: brightness(2)
+  filter: brightness(2); 
 }
 
 /* Responsive adjustments */
