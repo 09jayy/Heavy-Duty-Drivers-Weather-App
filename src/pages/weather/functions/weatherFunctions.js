@@ -5,11 +5,12 @@
  * @param {number} newIndex 
  */
 export const moveIndexInArray = (arr, oldIndex, newIndex) => {
-    if (newIndex >= arr.length) {
-        var k = newIndex - arr.length + 1;
-        while (k--) {
-            arr.push(undefined);
-        }
-    }
-    arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
+    if (newIndex < 0 || newIndex >= arr.length) return [...arr];
+
+    const newArr = [...arr]; 
+    const [movedItem] = newArr.splice(oldIndex, 1);
+
+    newArr.splice(newIndex, 0, movedItem); 
+
+    return newArr;
 }

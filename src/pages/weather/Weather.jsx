@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'; 
 import { WeatherWidget } from './components/WeatherWidget';
-import { fetchWeather } from '../../functions/fetchWeather';
+import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 
 /**
@@ -18,11 +18,25 @@ export const WeatherPage = () => {
         setLocations((prev) => prev.filter((_,index) => index !== deleteLocation)); 
     }
 
+    const moveForward = (index) => {
+        setLocations((prev) => moveIndexInArray(prev,index, index+1)); 
+    }
+
+    const moveBackward = (index) => {
+        setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
+    }
+
     return (
         <div id='container'>
             {
                 locations.map((location,index) => (
-                    <WeatherWidget key={index} city={location}  onDeleteLocation={() => deleteLocation(index)}/>
+                    <WeatherWidget 
+                        key={index} 
+                        city={location}  
+                        onDeleteLocation={() => deleteLocation(index)}
+                        moveForward={()=>moveForward(index)}
+                        moveBackward={()=>moveBackward(index)}
+                    />
                 ))
             }
             <WeatherWidget onAddLocation={addLocation}/>

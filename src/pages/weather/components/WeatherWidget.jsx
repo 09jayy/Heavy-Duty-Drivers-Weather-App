@@ -4,7 +4,7 @@ import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
-export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLocation = () => {}}) => {
+export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, moveForward, moveBackward}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [weatherData, setWeatherData] = useState({});
   
@@ -111,13 +111,13 @@ export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLo
         </div>
 
         <div className='actions ml-3 mr-3 mb-4'>
-          <ArrowLeft className='bright-hover left-right-arrows'/>
-          <ArrowUp className="bright-hover up-down-arrows"/>
+          <ArrowLeft className='bright-hover left-right-arrows' onClick={moveBackward}/>
+          <ArrowUp className="bright-hover up-down-arrows" onClick={moveBackward}/>
           
           <Trash2 className='w-6 h-6 bright-hover' onClick={onDeleteLocation}/>
           
-          <ArrowRight className="bright-hover left-right-arrows"/>
-          <ArrowDown className="bright-hover up-down-arrows"/>
+          <ArrowRight className="bright-hover left-right-arrows" onClick={moveForward}/>
+          <ArrowDown className="bright-hover up-down-arrows" onClick={moveForward}/>
         </div>
 
       </div>
