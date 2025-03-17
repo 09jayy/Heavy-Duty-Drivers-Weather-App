@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
-import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2 } from "lucide-react";
+import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
 export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLocation = () => {}}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);
@@ -109,8 +109,23 @@ export const WeatherWidget = ({city = null, onAddLocation = () => {}, onDeleteLo
             </span>
           </div>
         </div>
-        <div className={'trash-container'}>
-          <Trash2 className='w-5 h-5 m-4 trash' onClick={onDeleteLocation}/>
+
+        <div className='actions'>
+          <div className='move-arrows'>
+            <div className='left-right-arrows'>
+              <ArrowLeft/>
+              <ArrowRight/>
+            </div>
+
+            <div className='up-down-arrows'>
+              <ArrowUp/>
+              <ArrowDown/>
+            </div>
+          </div>
+
+          <div className={'trash-container'}>
+            <Trash2 className='w-5 h-5 m-4 trash' onClick={onDeleteLocation}/>
+          </div>
         </div>
       </div>
     );
