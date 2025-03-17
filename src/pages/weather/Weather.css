@@ -195,11 +195,34 @@ body {
 }
 
 .trash-container {
-  display: flex; 
-  justify-content: end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.trash {
+.bright-hover:hover{
+  filter: brightness(2)
+}
+
+.move-arrows {
+  display: flex; 
+  align-items: center;
+}
+
+.up-down-arrows {
+  display: none;
+}
+
+.left-right-arrows {
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: var(--accent-color)
 }
 
@@ -219,5 +242,21 @@ body {
   .weather-footer {
     padding-left: 15px;
     padding-right: 15px;
+  }
+}
+
+@media (max-width: 768px){
+  .up-down-arrows {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .actions {
+    margin-bottom: 1rem;
+  }
+
+  .left-right-arrows {
+    display: none 
   }
 }
