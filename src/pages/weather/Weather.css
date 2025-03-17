@@ -203,6 +203,10 @@ body {
   color: var(--accent-color)
 }
 
+.trash:hover{
+  filter: brightness(2)
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .weather-info {
