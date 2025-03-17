@@ -1,12 +1,13 @@
 import React, {useState} from 'react'; 
 import {House, CloudSun, TriangleAlert} from 'lucide-react'; 
+import './NavBar.css'; 
 
 export const NavBar = () => {
     /** @type {'home' | 'weather' | 'alerts'} */
     const [curPage, setCurPage] = useState('home'); 
 
     return (
-        <div className="py-8 bg-gradient-to-r from-[#1B263B] to-[#273B54] shadow-lg">
+        <div className='container'>
             <button onClick={()=>setCurPage('home')}>
                 <House/>
             </button>

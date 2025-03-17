@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { WeatherPage } from './pages/weather/Weather';
-import { NavBar } from './components/NavBar';
-// import './App.css';
+import { NavBar } from './components/Navbar/NavBar';
+import './App.css';
 
 /**
  * Handles global layout and routes to other pages/components
@@ -12,10 +12,11 @@ import { NavBar } from './components/NavBar';
 
 const App = () => {
   return (
-    <div className="min-h-screen bg-[#0D1B2A]">
+    <div className="root-container">
       <header>
         <NavBar/>
       </header>
+
       <main>
         <WeatherPage />
       </main>
