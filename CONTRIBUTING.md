@@ -23,7 +23,7 @@
 - [x] Create inital elements and HTMX Structure of page
 - [ ] The page is correctly styled using CSS according to the FIGMA Design
 - [x] Create the shared component for weather for each location
-- [ ] Component for location based weather:
+- [x] Component for location based weather:
   - [x] New component can be added
-  - [ ] Component can be deleted
-  - [ ] List of components can be reordered (Optional/till last)
+  - [x] Component can be deleted
+  - [x] List of components can be reordered (Optional/till last)
