@@ -7,7 +7,7 @@ export const NavBar = () => {
     const [curPage, setCurPage] = useState('home'); 
 
     return (
-        <div className='container'>
+        <div className='navbar-container'>
             <button onClick={()=>setCurPage('home')}>
                 <House/>
             </button>
