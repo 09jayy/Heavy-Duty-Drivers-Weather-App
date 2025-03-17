@@ -14,11 +14,15 @@ export const WeatherPage = () => {
         setLocations((prev) => [...prev, newLocation]); 
     }
 
+    const deleteLocation = (deleteLocation) => {
+        setLocations((prev) => prev.filter((_,index) => index !== deleteLocation)); 
+    }
+
     return (
         <div id='container'>
             {
                 locations.map((location,index) => (
-                    <WeatherWidget key={index} city={location}/>
+                    <WeatherWidget key={index} city={location}  onDeleteLocation={() => deleteLocation(index)}/>
                 ))
             }
             <WeatherWidget onAddLocation={addLocation}/>
