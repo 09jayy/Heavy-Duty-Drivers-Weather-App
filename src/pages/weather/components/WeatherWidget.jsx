@@ -11,6 +11,7 @@ export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, mov
     const fetchData = useCallback(async () => {
       if (!city) return;
       const data = await fetchWeather(city);
+      console.log("Fetched weather data:", data); 
       data != null
         ? setWeatherData(data)
         : console.error("error: city not recognized");
@@ -19,6 +20,7 @@ export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, mov
     useEffect(() => {
       fetchData();
     }, [fetchData]);
+
   
     if (city === null) {
       return (
