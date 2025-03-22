@@ -3,8 +3,9 @@ import { createPortal } from "react-dom";
 import { SearchModal } from "../../weather/components/SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { AlertLogs } from "./AlertLogs";
 
-export const AlertsWidget = ({city = null, onAddLocation, onDeleteLocation, moveForward, moveBackward}) => {
+export const AlertsWidget = ({city = null, onAddLocation}) => {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [weatherData, setWeatherData] = useState({});
   
@@ -65,50 +66,12 @@ export const AlertsWidget = ({city = null, onAddLocation, onDeleteLocation, move
           </div>
         </div>
   
-        <div className="weather-info">
-          <div className="info-item">
-            <Thermometer className="info-icon" />
-            <div>
-              <p className="info-label">Feels like</p>
-              <p className="info-value">
-                {weatherData.main?.feels_like && `${Math.round(weatherData.main.feels_like)}°`}
-              </p>
-            </div>
-          </div>
-          <div className="info-item">
-            <Droplets className="info-icon" />
-            <div>
-              <p className="info-label">Humidity</p>
-              <p className="info-value">
-                {weatherData.main?.humidity && `${weatherData.main.humidity}%`}
-              </p>
-            </div>
-          </div>
-          <div className="info-item">
-            <Wind className="info-icon" />
-            <div>
-              <p className="info-label">Wind</p>
-              <p className="info-value">
-                {weatherData.wind?.speed && `${Math.round(weatherData.wind.speed)} km/h`}
-              </p>
-            </div>
-          </div>
+        <div className="weather-footer">
+
+          <AlertLogs city={city}/>
         </div>
   
-        <div className="weather-footer">
-          <div className="min-max">
-            <span className="min-max-label">Low</span>
-            <span className="min-max-value">
-              {weatherData.main?.temp_min && `${Math.round(weatherData.main.temp_min)}°`}
-            </span>
-          </div>
-          <div className="min-max">
-            <span className="min-max-label">High</span>
-            <span className="min-max-value">
-              {weatherData.main?.temp_max && `${Math.round(weatherData.main.temp_max)}°`}
-            </span>
-          </div>
-        </div>
+     
 
 
       </div>
