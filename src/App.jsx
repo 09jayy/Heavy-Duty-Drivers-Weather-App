@@ -15,6 +15,8 @@ import './App.css';
 const App = () => {
   /** @type {'home' | 'weather' | 'alerts'} */
   const [curPage, setCurPage] = useState('weather'); 
+  const [searchedCity, setSearchedCity] = useState(null);
+
 
   const renderPage = ()=>{
     switch(curPage) {
@@ -22,7 +24,7 @@ const App = () => {
         return <Home/>
 
       case 'weather':
-        return <WeatherPage/>
+        return <WeatherPage searchedCity={searchedCity}/>
 
       case 'alerts':
         return <Alerts/>
@@ -35,7 +37,7 @@ const App = () => {
   return (
     <div className="root-container">
       <header>
-        <NavBar changePage={setCurPage}/>
+        <NavBar changePage={setCurPage} setSearchedCity={setSearchedCity}/>
       </header>
 
       <main>
