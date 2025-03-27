@@ -54,25 +54,9 @@ export const Home = () => {
         }
     }, [currentData]);
 
-    const formatTime = (dt_txt, index) => {
-        if (index === 0) {
-            return 'Now';
-        }
-        const date = new Date(dt_txt);
-        return '${date.getHours()}:00';
-    };
-
     const formatSunset = (timestamp) => {
         const date = new Date(timestamp * 1000);
         return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-    };
-
-    const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-        }
-        return array;
     };
 
     const getSunlightHours = (sunrise, sunset) => {
@@ -85,34 +69,7 @@ export const Home = () => {
     
         return `${sunlightHours} hours`;
     };
-    const convertVissibility = (meters) => {
-        const miles = meters/1609;
-        return Math.round(miles);
-    };
-    const getPrecipitation = (value) => {
-        if (data && data.rain && data.rain['1h']) {
-            return data.rain['1h'];
-        }
-        return 0;
-    };
 
-    const getAQIDescription = (aqi) => {
-        switch(aqi){
-            case 1:
-                return 'Good';
-            case 2:
-                return 'Fair';
-            case 3:
-                return 'Moderate';
-            case 4:
-                return 'Poor';
-            case 5:
-                return 'Very Poor';
-            default:
-                return 'N/A';
-        }
-
-    };
     if (!currentData || !forecastData || !forecastData.list) {
         return (
             <div className="home-container">
@@ -122,7 +79,7 @@ export const Home = () => {
     }
     const currentTime = new Date().getHours(); 
 
-    const forecastList = forecastData.list.slice(0, 7); 
+    const forecastList = forecastData.list.slice(0, 8); 
 
     const nowForecast = forecastList.find(hour => new Date(hour.dt * 1000).getHours() === currentTime);
 
@@ -133,6 +90,7 @@ export const Home = () => {
 
     const sunsetTime = formatSunset(currentData.sys.sunset); 
     const feelsLikeTemp = currentData?.main?.feels_like;
+
 
     return (
 
@@ -173,30 +131,30 @@ export const Home = () => {
                 </div>
 
                 <ul>
-    {hourlyForecast.map((hour, index) => {
-        const forecastHour = new Date(hour.dt * 1000);
-        const isSunset = forecastHour.getHours() === new Date(currentData.sys.sunset * 1000).getHours();
+                    {hourlyForecast.map((hour, index) => {
+                        const forecastHour = new Date(hour.dt * 1000);
+                        const isSunset = forecastHour.getHours() === new Date(currentData.sys.sunset * 1000).getHours();
 
-        return (
-            <li key={index}>
-                {isSunset ? (
+                        return (
+                            <li key={index}>
+                                {isSunset ? (
 
-                    <>
-                        <p>{sunsetTime}</p>
-                        <img src="/sunset.png" className="Weather-conditions-icons" alt="Sunset" />
-                        <p>{Math.round(hour.main.temp)}°C</p>
-                    </>
-                ) : (
-                    <>
-                        <p>{forecastHour.getHours()}:00</p>
-                        <img src="/Weather.png" alt="Weather" className="Weather-conditions-icons" />
-                        <p>{Math.round(hour.main.temp)}°C</p>
-                    </>
-                )}
-            </li>
-        );
-    })}
-</ul>
+                                    <>
+                                        <p>{sunsetTime}</p>
+                                        <img src="/sunset.png" className="Weather-conditions-icons" alt="Sunset" />
+                                        <p>{Math.round(hour.main.temp)}°C</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>{forecastHour.getHours()}:00</p>
+                                        <img src="/Weather.png" alt="Weather" className="Weather-conditions-icons" />
+                                        <p>{Math.round(hour.main.temp)}°C</p>
+                                    </>
+                                )}
+                            </li>
+                        );
+                    })}
+                </ul>
 
             </div>
         </div>
