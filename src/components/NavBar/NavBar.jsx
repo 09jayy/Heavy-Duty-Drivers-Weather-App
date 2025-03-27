@@ -2,8 +2,16 @@ import React, {useState} from 'react';
 import {House, Cloud, TriangleAlert} from 'lucide-react'; 
 import { Search, AlertTriangle, Grid } from 'lucide-react';
 
-export const NavBar = ({changePage}) => {
-    
+export const NavBar = ({changePage, setSearchedCity}) => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault(); // stop form from reloading the page
+    if (searchInput.trim()) {
+      setSearchedCity(searchInput.trim()); // send city to App state
+      changePage('weather'); // go to Weather page
+    }
+  };
  
     return (
         <div className="w-full bg-navy-blue border-b border-b-black">
@@ -35,19 +43,19 @@ export const NavBar = ({changePage}) => {
             </button>
             
           </div>
-          
-          <div className="flex-1 flex justify-center">
-            <div className="relative w-full max-w-md">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-light-blue/70" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search location...."
-                className="w-full bg-navy-blue/40 border border-light-blue/20 rounded-full py-2 pl-10 pr-4 text-white placeholder-light-blue/70 focus:outline-none focus:ring-1 focus:ring-light-blue/30"
-              />
+
+          <form onSubmit={handleSearch} className="relative w-full max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-light-blue/70" />
             </div>
-          </div>
+            <input
+              type="text"
+              placeholder="Search location...."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full bg-navy-blue/40 border border-light-blue/20 rounded-full py-2 pl-10 pr-4 text-white placeholder-light-blue/70 focus:outline-none focus:ring-1 focus:ring-light-blue/30"
+            />
+        </form>
           
           <div className="w-[180px]"></div>
         </div>

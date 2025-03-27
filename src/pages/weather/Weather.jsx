@@ -7,8 +7,18 @@ import './Weather.css';
  * Page Component contains functionality of adding new weather to page in a list 
  * @returns JSX
  */
-export const WeatherPage = () => {
+export const WeatherPage = ({searchedCity}) => {
+    // Accept the prop from app.jsx and set it as the first location
     const [locations, setLocations] = useState(['london']); 
+    
+    useEffect(() => {
+        if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
+          setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
+        }
+      }, [searchedCity]);
+    //   will add the searchedCity to the locations list 
+    // whenever searchedCity changes, 
+    // as long as it’s not already in the list.
 
     const addLocation = (newLocation) => {
         setLocations((prev) => [...prev, newLocation]); 
