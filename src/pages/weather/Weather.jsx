@@ -39,6 +39,10 @@ export const WeatherPage = ({searchedCity}) => {
         setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
     }
 
+    const removeLatestLocation = () => {
+        setLocations((prev) => prev.slice(0,prev.length -1)); 
+    }
+
     return (
         <>
             {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
@@ -49,6 +53,7 @@ export const WeatherPage = ({searchedCity}) => {
                             key={index} 
                             city={location}  
                             setError={setError}
+                            removeLatestLocation={() => removeLatestLocation}
                             onDeleteLocation={() => deleteLocation(index)}
                             moveForward={()=>moveForward(index)}
                             moveBackward={()=>moveBackward(index)}
