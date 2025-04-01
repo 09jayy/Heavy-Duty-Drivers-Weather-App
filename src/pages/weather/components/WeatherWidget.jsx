@@ -2,16 +2,35 @@ import React, { useState, useEffect, useCallback } from "react";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
-export const WeatherWidget = ({city = null, onDeleteLocation, moveForward, moveBackward}) => {
+export const WeatherWidget = ({city, onDeleteLocation, moveForward, moveBackward, setError}) => {
     const [weatherData, setWeatherData] = useState({});
-  
+    const [returnComponent, setReturnComponent] = useState(true); 
+
     const fetchData = useCallback(async () => {
-      if (!city) return;
-      const data = await fetchWeather(city);
-      console.log("Fetched weather data:", data); 
-      data != null
-        ? setWeatherData(data)
-        : console.error("error: city not recognized");
+      try {
+        const data = await fetchWeather(city);
+        console.log("Fetched weather data:", data); 
+        setWeatherData(data); 
+      } catch(error) {
+        if (error.response) {
+          const statusCode = error.response.status;
+
+          if (statusCode === 404) {
+            setError('City not recognized. Please check the city name and try again.');
+          } else if (statusCode === 500) {
+            setError('Internal Server Error. Please try again later.');
+          } else {
+            setError(`An unexpected error occurred. Status code: ${statusCode}`);
+          }
+        } else if (error.request) {
+          setError('No response from the server. Please check your network connection.');
+        } else {
+          setError('Error in request setup: ' + error.message);
+        }
+
+        setReturnComponent(false);
+        console.error('Error:', error.message);
+      }
     }, [city]);
   
     useEffect(() => {
@@ -19,6 +38,7 @@ export const WeatherWidget = ({city = null, onDeleteLocation, moveForward, moveB
     }, [fetchData]);
   
     return (
+      returnComponent ? 
       <div className="weather-card">
         <div className="weather-header">
           <div>
@@ -95,5 +115,5 @@ export const WeatherWidget = ({city = null, onDeleteLocation, moveForward, moveB
         </div>
 
       </div>
-    );
+    : null);
   };

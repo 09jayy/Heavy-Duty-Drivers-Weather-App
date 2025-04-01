@@ -17,7 +17,6 @@ const App = () => {
   const [curPage, setCurPage] = useState('weather'); 
   const [searchedCity, setSearchedCity] = useState(null);
 
-
   const renderPage = ()=>{
     switch(curPage) {
       case 'home':
