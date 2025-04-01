@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'; 
 import { WeatherWidget } from './components/WeatherWidget';
+import { SearchWidget } from './components/SearchWidget'; 
 import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
+import { ErrorPopup } from '../../components/ErrorPopup';
 
 /**
  * Page Component contains functionality of adding new weather to page in a list 
@@ -10,12 +12,13 @@ import './Weather.css';
 export const WeatherPage = ({searchedCity}) => {
     // Accept the prop from app.jsx and set it as the first location
     const [locations, setLocations] = useState(['london']); 
-    
+    const [error, setError] = useState(''); 
+
     useEffect(() => {
         if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
-          setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
+            setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
         }
-      }, [searchedCity]);
+    }, [searchedCity]);
     //   will add the searchedCity to the locations list 
     // whenever searchedCity changes, 
     // as long as it’s not already in the list.
@@ -36,21 +39,30 @@ export const WeatherPage = ({searchedCity}) => {
         setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
     }
 
+    const removeLatestLocation = () => {
+        setLocations((prev) => prev.slice(0,prev.length -1)); 
+    }
+
     return (
-        <div id='container'>
-            {
-                locations.map((location,index) => (
-                    <WeatherWidget 
-                        key={index} 
-                        city={location}  
-                        onDeleteLocation={() => deleteLocation(index)}
-                        moveForward={()=>moveForward(index)}
-                        moveBackward={()=>moveBackward(index)}
-                    />
-                ))
-            }
-            <WeatherWidget onAddLocation={addLocation}/>
-        </div>
+        <>
+            {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
+            <div id='container'>
+                {
+                    locations.map((location,index) => (
+                        <WeatherWidget 
+                            key={index} 
+                            city={location}  
+                            setError={setError}
+                            removeLatestLocation={() => removeLatestLocation}
+                            onDeleteLocation={() => deleteLocation(index)}
+                            moveForward={()=>moveForward(index)}
+                            moveBackward={()=>moveBackward(index)}
+                        />
+                    ))
+                }
+                <SearchWidget onAddLocation={addLocation}/>
+            </div>
+        </>
     )
 }
 

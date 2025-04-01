@@ -1,52 +1,45 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
-import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
-export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, moveForward, moveBackward}) => {
-    const [showSearchModal, setShowSearchModal] = useState(false);
+export const WeatherWidget = ({city, onDeleteLocation, moveForward, moveBackward, setError, removeLatestLocation}) => {
     const [weatherData, setWeatherData] = useState({});
-  
+    const [returnComponent, setReturnComponent] = useState(true); 
+
     const fetchData = useCallback(async () => {
-      if (!city) return;
-      const data = await fetchWeather(city);
-      console.log("Fetched weather data:", data); 
-      data != null
-        ? setWeatherData(data)
-        : console.error("error: city not recognized");
+      try {
+        const data = await fetchWeather(city);
+        console.log("Fetched weather data:", data); 
+        setWeatherData(data); 
+      } catch(error) {
+        if (error.response) {
+          const statusCode = error.response.status;
+
+          if (statusCode === 404) {
+            setError('City not recognized. Please check the city name and try again.');
+          } else if (statusCode === 500) {
+            setError('Internal Server Error. Please try again later.');
+          } else {
+            setError(`An unexpected error occurred. Status code: ${statusCode}`);
+          }
+        } else if (error.request) {
+          setError('No response from the server. Please check your network connection.');
+        } else {
+          setError('Error in request setup: ' + error.message);
+        }
+
+        setReturnComponent(false);
+        removeLatestLocation(); 
+        console.error('Error:', error.message);
+      }
     }, [city]);
   
     useEffect(() => {
       fetchData();
     }, [fetchData]);
-
-  
-    if (city === null) {
-      return (
-        <div className="weather-card add-card">
-          <div 
-            onClick={() => {
-              setShowSearchModal(true);
-            }}
-            className="add-location-button"
-          >
-            <Plus className="plus-icon" />
-            <span>Add Location</span>
-          </div>
-          {showSearchModal &&
-            createPortal(
-              <SearchModal
-                onClose={() => setShowSearchModal(false)}
-                onSubmit={onAddLocation}
-              />,
-              document.body
-            )}
-        </div>
-      );
-    }
   
     return (
+      returnComponent ? 
       <div className="weather-card">
         <div className="weather-header">
           <div>
@@ -123,5 +116,5 @@ export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, mov
         </div>
 
       </div>
-    );
+    : null);
   };
