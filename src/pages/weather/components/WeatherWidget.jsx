@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import { SearchModal } from "./SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
-import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
-export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, moveForward, moveBackward}) => {
-    const [showSearchModal, setShowSearchModal] = useState(false);
+export const WeatherWidget = ({city = null, onDeleteLocation, moveForward, moveBackward}) => {
     const [weatherData, setWeatherData] = useState({});
   
     const fetchData = useCallback(async () => {
@@ -20,31 +17,6 @@ export const WeatherWidget = ({city = null, onAddLocation, onDeleteLocation, mov
     useEffect(() => {
       fetchData();
     }, [fetchData]);
-
-  
-    if (city === null) {
-      return (
-        <div className="weather-card add-card">
-          <div 
-            onClick={() => {
-              setShowSearchModal(true);
-            }}
-            className="add-location-button"
-          >
-            <Plus className="plus-icon" />
-            <span>Add Location</span>
-          </div>
-          {showSearchModal &&
-            createPortal(
-              <SearchModal
-                onClose={() => setShowSearchModal(false)}
-                onSubmit={onAddLocation}
-              />,
-              document.body
-            )}
-        </div>
-      );
-    }
   
     return (
       <div className="weather-card">

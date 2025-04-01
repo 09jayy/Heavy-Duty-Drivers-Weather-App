@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'; 
 import { WeatherWidget } from './components/WeatherWidget';
+import { SearchWidget } from './components/SearchWidget'; 
 import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 
@@ -13,9 +14,9 @@ export const WeatherPage = ({searchedCity}) => {
     
     useEffect(() => {
         if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
-          setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
+            setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
         }
-      }, [searchedCity]);
+    }, [searchedCity]);
     //   will add the searchedCity to the locations list 
     // whenever searchedCity changes, 
     // as long as it’s not already in the list.
@@ -49,7 +50,7 @@ export const WeatherPage = ({searchedCity}) => {
                     />
                 ))
             }
-            <WeatherWidget onAddLocation={addLocation}/>
+            <SearchWidget onAddLocation={addLocation}/>
         </div>
     )
 }
