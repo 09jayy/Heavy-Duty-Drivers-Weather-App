@@ -4,6 +4,7 @@ import { SearchWidget } from '../../components/SearchWidget';
 import { locationsContext } from '../../locationsContext';
 import { addLocation, deleteLocation, moveForward, moveBackward } from '../../functions/locationFunctions';
 import { AlertLogs } from './components/AlertLogs';
+import { ErrorPopup } from '../../components/ErrorPopup';
 
 export const Alerts = () => {
     const {locations, setLocations} = useContext(locationsContext);  
