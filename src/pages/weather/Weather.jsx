@@ -1,10 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react'; 
+import React, {useState, useEffect, useContext, useCallback} from 'react'; 
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SearchWidget } from '../../components/SearchWidget'; 
 import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';
 import { locationsContext } from '../../locationsContext';
+import { fetchWeather } from '../../functions/fetchWeather';
+import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
 /**
  * Page Component contains functionality of adding new weather to page in a list 
@@ -12,7 +14,7 @@ import { locationsContext } from '../../locationsContext';
  */
 export const WeatherPage = ({searchedCity}) => {
     // Accept the prop from app.jsx and set it as the first location
-    const {locations, setLocations} = useContext(locationsContext); 
+    const {locations, setLocations} = useContext(locationsContext);  
     const [error, setError] = useState(''); 
 
     // useEffect(() => {
@@ -24,8 +26,29 @@ export const WeatherPage = ({searchedCity}) => {
     // // whenever searchedCity changes, 
     // // as long as it’s not already in the list.
 
-    const addLocation = (newLocation) => {
-        setLocations((prev) => [...prev, newLocation]); 
+    const addLocation = async (newLocation) => {
+        try {
+            const data = await fetchWeather(newLocation);
+            setLocations((prev) => [...prev, data]); 
+        } catch (error) {
+            if (error.response) {
+                const statusCode = error.response.status;
+
+                if (statusCode === 404) {
+                setError('City not recognized. Please check the city name and try again.');
+                } else if (statusCode === 500) {
+                setError('Internal Server Error. Please try again later.');
+                } else {
+                setError(`An unexpected error occurred. Status code: ${statusCode}`);
+                }
+            } else if (error.request) {
+                setError('No response from the server. Please check your network connection.');
+            } else {
+                setError('Error in request setup: ' + error.message);
+            }
+            onDeleteLocation(); 
+            console.error('Error:', error.message);
+        }
     }
 
     const deleteLocation = (deleteLocation) => {
@@ -45,16 +68,59 @@ export const WeatherPage = ({searchedCity}) => {
             {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
             <div id='container'>
                 {
-                    locations.map((location,index) => (
-                        <WeatherWidget 
+                    locations.map((locationData,index) => (
+                        <WeatherWidget
                             key={index} 
-                            city={location}  
-                            setError={setError}
-                            cleanLocationsList={() => cleanLocationsList}
+                            locationData={locationData}
                             onDeleteLocation={() => deleteLocation(index)}
                             moveForward={()=>moveForward(index)}
                             moveBackward={()=>moveBackward(index)}
-                        />
+                        >
+                            <div className="weather-info">
+                                <div className="info-item">
+                                    <Thermometer className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Feels like</p>
+                                    <p className="info-value">
+                                        {locationData.main?.feels_like && `${Math.round(locationData.main.feels_like)}°`}
+                                    </p>
+                                    </div>
+                                </div>
+                                <div className="info-item">
+                                    <Droplets className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Humidity</p>
+                                    <p className="info-value">
+                                        {locationData.main?.humidity && `${locationData.main.humidity}%`}
+                                    </p>
+                                    </div>
+                                </div>
+                                <div className="info-item">
+                                    <Wind className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Wind</p>
+                                    <p className="info-value">
+                                        {locationData.wind?.speed && `${Math.round(locationData.wind.speed)} km/h`}
+                                    </p>
+                                    </div>
+                                </div>
+                                </div>
+                        
+                                <div className="weather-footer">
+                                <div className="min-max">
+                                    <span className="min-max-label">Low</span>
+                                    <span className="min-max-value">
+                                    {locationData.main?.temp_min && `${Math.round(locationData.main.temp_min)}°`}
+                                    </span>
+                                </div>
+                                <div className="min-max">
+                                    <span className="min-max-label">High</span>
+                                    <span className="min-max-value">
+                                    {locationData.main?.temp_max && `${Math.round(locationData.main.temp_max)}°`}
+                                    </span>
+                                </div>
+                            </div>
+                        </WeatherWidget>
                     ))
                 }
                 <SearchWidget onAddLocation={addLocation}/>
