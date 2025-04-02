@@ -1,27 +1,39 @@
 import React, { useState, useContext }from 'react'; 
 import { WeatherWidget } from '../../components/WeatherWidget';
-import { AlertsWidget } from './components/AlertsWidget';
+import { SearchWidget } from '../../components/SearchWidget';
 import { locationsContext } from '../../locationsContext';
+import { addLocation, deleteLocation, moveForward, moveBackward } from '../../functions/locationFunctions';
+import { AlertLogs } from './components/AlertLogs';
 
 export const Alerts = () => {
-    const [locations, setLocations] = useContext(locationsContext); 
+    const {locations, setLocations} = useContext(locationsContext);  
+    const [error, setError] = useState(''); 
 
-    const addLocation = (newLocation) => {
-        setLocations((prev) => [...prev, newLocation]); 
+    const onAddLocation = (newLocation) => {
+        addLocation(newLocation, setLocations, setError); 
     }
 
     return (
-        <div id='container'>
+        <>
+            {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
+            <div id='container'>
                 {
-                locations.map((location,index) => (
-                    <AlertsWidget
-                        key={index} 
-                        city={location}  
-                        onDeleteLocation={() => deleteLocation(index)}
-                    />
-                ))
-            }
-            <WeatherWidget onAddLocation={addLocation}/>
-        </div>
-    ); 
+                    locations.map((locationData,index) => (
+                        <WeatherWidget
+                            key={index} 
+                            locationData={locationData}
+                            onDeleteLocation={() => deleteLocation(index, setLocations)}
+                            moveForward={()=>moveForward(index, setLocations)}
+                            moveBackward={()=>moveBackward(index, setLocations)}
+                        >
+                            <div className="weather-footer">
+                                <AlertLogs weatherData={locationData}/>
+                            </div>
+                        </WeatherWidget>
+                    ))
+                }
+                <SearchWidget onAddLocation={onAddLocation}/>
+            </div>
+        </>
+    )
 }
