@@ -9,7 +9,7 @@ export const NavBar = ({changePage, setSearchedCity}) => {
     e.preventDefault(); // stop form from reloading the page
     if (searchInput.trim()) {
       setSearchedCity(searchInput.trim()); // send city to App state
-      changePage('weather'); // go to Weather page
+      changePage('home'); // go to home page
     }
   };
  
