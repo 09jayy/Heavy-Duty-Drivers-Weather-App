@@ -1,6 +1,5 @@
-import React, {useState} from 'react'; 
-import {House, Cloud, TriangleAlert} from 'lucide-react'; 
-import { Search, AlertTriangle, Grid } from 'lucide-react';
+import React, {useState} from 'react';  
+import { Search, AlertTriangle, Grid, Cloud } from 'lucide-react';
 
 export const NavBar = ({changePage, setSearchedCity}) => {
   const [searchInput, setSearchInput] = useState('');
@@ -9,10 +8,11 @@ export const NavBar = ({changePage, setSearchedCity}) => {
     e.preventDefault(); // stop form from reloading the page
     if (searchInput.trim()) {
       setSearchedCity(searchInput.trim()); // send city to App state
-      changePage('home'); // go to home page
+      setSearchInput(''); // clears search after entering 
+      changePage('home'); 
     }
   };
- 
+
     return (
         <div className="w-full bg-navy-blue border-b border-b-black">
         <div className="max-w-screen-2xl mx-auto flex items-center px-4 py-3">
@@ -50,7 +50,7 @@ export const NavBar = ({changePage, setSearchedCity}) => {
             </div>
             <input
               type="text"
-              placeholder="Search location...."
+              placeholder="Search location details..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               className="w-full bg-navy-blue/40 border border-light-blue/20 rounded-full py-2 pl-10 pr-4 text-white placeholder-light-blue/70 focus:outline-none focus:ring-1 focus:ring-light-blue/30"

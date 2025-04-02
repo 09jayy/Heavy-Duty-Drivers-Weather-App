@@ -12,11 +12,10 @@ import './App.css';
  * - Actual links to pages/components
  * @returns JSX
  */
-
 const App = () => {
   /** @type {'home' | 'weather' | 'alerts'} */
-  const [curPage, setCurPage] = useState('weather'); 
-  const [searchedCity, setSearchedCity] = useState(null);
+  const [curPage, setCurPage] = useState('home'); 
+  const [searchedCity, setSearchedCity] = useState('');
   const [locations, setLocations] = useState([]); 
 
   const renderPage = ()=>{
@@ -25,7 +24,7 @@ const App = () => {
         return <Home searchedCity={searchedCity}/>
 
       case 'weather':
-        return <WeatherPage searchedCity={searchedCity}/>
+        return <WeatherPage/>
 
       case 'alerts':
         return <Alerts/>
