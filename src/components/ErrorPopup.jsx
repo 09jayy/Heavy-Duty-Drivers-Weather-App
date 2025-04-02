@@ -22,6 +22,10 @@ export const ErrorPopup = ({ message, handleClose }) => {
             borderRadius: "5px",
             fontWeight: "bold",
             zIndex: 9999,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
         }}
     >
         {message}
