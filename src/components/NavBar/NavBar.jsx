@@ -1,8 +1,9 @@
 import React, {useState} from 'react';  
 import { Search, AlertTriangle, Grid, Cloud } from 'lucide-react';
 
-export const NavBar = ({changePage, setSearchedCity}) => {
+export const NavBar = ({curPage,changePage, setSearchedCity}) => {
   const [searchInput, setSearchInput] = useState('');
+  const navbarBrightnessStrength = 1.4; 
 
   const handleSearch = (e) => {
     e.preventDefault(); // stop form from reloading the page
@@ -20,6 +21,7 @@ export const NavBar = ({changePage, setSearchedCity}) => {
             <button 
               className="cursor-pointer flex flex-col items-center justify-center gap-1 px-6 py-3 text-light-blue transition-colors duration-200 hover:text-white"
               onClick={() => changePage('home')}
+              style={curPage === 'home' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
             >
               <div className="text-2xl text-[#778DA9]"><Cloud size={24} /></div>
               <span className="text-sm font-light">Weather</span>
@@ -28,6 +30,7 @@ export const NavBar = ({changePage, setSearchedCity}) => {
             <button 
               className="cursor-pointer flex flex-col items-center justify-center gap-1 px-6 py-3 text-light-blue transition-colors duration-200 hover:text-white"
               onClick={() => changePage('weather')}
+              style={curPage === 'weather' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
             >
               <div className="text-2xl text-[#778DA9]"><Grid size={24} /></div>
               <span className="text-sm font-light">Overview</span>
@@ -37,6 +40,7 @@ export const NavBar = ({changePage, setSearchedCity}) => {
             <button 
               className="cursor-pointer flex flex-col items-center justify-center gap-1 px-6 py-3 text-light-blue transition-colors duration-200 hover:text-white"
               onClick={() => changePage('alerts')}
+              style={curPage === 'alerts' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
             >
               <div className="text-2xl text-[#778DA9]"><AlertTriangle size={24} /></div>
               <span className="text-sm font-light">Alerts</span>
