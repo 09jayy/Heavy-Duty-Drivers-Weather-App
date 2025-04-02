@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react'; 
-import { WeatherWidget } from './components/WeatherWidget';
-import { SearchWidget } from './components/SearchWidget'; 
-import { moveIndexInArray } from './functions/weatherFunctions';
+import React, {useState, useEffect, useContext, useCallback} from 'react'; 
+import { WeatherWidget } from '../../components/WeatherWidget';
+import { SearchWidget } from '../../components/SearchWidget'; 
 import './Weather.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';
+import { locationsContext } from '../../locationsContext';
+import { fetchWeather } from '../../functions/fetchWeather';
+import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { addLocation, deleteLocation, moveForward, moveBackward } from '../../functions/locationFunctions';
 
 /**
  * Page Component contains functionality of adding new weather to page in a list 
@@ -11,36 +14,20 @@ import { ErrorPopup } from '../../components/ErrorPopup';
  */
 export const WeatherPage = ({searchedCity}) => {
     // Accept the prop from app.jsx and set it as the first location
-    const [locations, setLocations] = useState(['london']); 
+    const {locations, setLocations} = useContext(locationsContext);  
     const [error, setError] = useState(''); 
 
-    useEffect(() => {
-        if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
-            setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
-        }
-    }, [searchedCity]);
-    //   will add the searchedCity to the locations list 
-    // whenever searchedCity changes, 
-    // as long as it’s not already in the list.
+    // useEffect(() => {
+    //     if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
+    //         setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
+    //     }
+    // }, [searchedCity]);
+    // //   will add the searchedCity to the locations list 
+    // // whenever searchedCity changes, 
+    // // as long as it’s not already in the list.
 
-    const addLocation = (newLocation) => {
-        setLocations((prev) => [...prev, newLocation]); 
-    }
-
-    const deleteLocation = (deleteLocation) => {
-        setLocations((prev) => prev.filter((_,index) => index !== deleteLocation)); 
-    }
-
-    const moveForward = (index) => {
-        setLocations((prev) => moveIndexInArray(prev,index, index+1)); 
-    }
-
-    const moveBackward = (index) => {
-        setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
-    }
-
-    const removeLatestLocation = () => {
-        setLocations((prev) => prev.slice(0,prev.length -1)); 
+    const onAddLocation = (newLocation) => {
+        addLocation(newLocation, setLocations, setError); 
     }
 
     return (
@@ -48,19 +35,62 @@ export const WeatherPage = ({searchedCity}) => {
             {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
             <div id='container'>
                 {
-                    locations.map((location,index) => (
-                        <WeatherWidget 
+                    locations.map((locationData,index) => (
+                        <WeatherWidget
                             key={index} 
-                            city={location}  
-                            setError={setError}
-                            removeLatestLocation={() => removeLatestLocation}
-                            onDeleteLocation={() => deleteLocation(index)}
-                            moveForward={()=>moveForward(index)}
-                            moveBackward={()=>moveBackward(index)}
-                        />
+                            locationData={locationData}
+                            onDeleteLocation={() => deleteLocation(index, setLocations)}
+                            moveForward={()=>moveForward(index, setLocations)}
+                            moveBackward={()=>moveBackward(index, setLocations)}
+                        >
+                            <div className="weather-info">
+                                <div className="info-item">
+                                    <Thermometer className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Feels like</p>
+                                    <p className="info-value">
+                                        {locationData.main?.feels_like && `${Math.round(locationData.main.feels_like)}°`}
+                                    </p>
+                                    </div>
+                                </div>
+                                <div className="info-item">
+                                    <Droplets className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Humidity</p>
+                                    <p className="info-value">
+                                        {locationData.main?.humidity && `${locationData.main.humidity}%`}
+                                    </p>
+                                    </div>
+                                </div>
+                                <div className="info-item">
+                                    <Wind className="info-icon" />
+                                    <div>
+                                    <p className="info-label">Wind</p>
+                                    <p className="info-value">
+                                        {locationData.wind?.speed && `${Math.round(locationData.wind.speed)} km/h`}
+                                    </p>
+                                    </div>
+                                </div>
+                                </div>
+                        
+                                <div className="weather-footer">
+                                <div className="min-max">
+                                    <span className="min-max-label">Low</span>
+                                    <span className="min-max-value">
+                                    {locationData.main?.temp_min && `${Math.round(locationData.main.temp_min)}°`}
+                                    </span>
+                                </div>
+                                <div className="min-max">
+                                    <span className="min-max-label">High</span>
+                                    <span className="min-max-value">
+                                    {locationData.main?.temp_max && `${Math.round(locationData.main.temp_max)}°`}
+                                    </span>
+                                </div>
+                            </div>
+                        </WeatherWidget>
                     ))
                 }
-                <SearchWidget onAddLocation={addLocation}/>
+                <SearchWidget onAddLocation={onAddLocation}/>
             </div>
         </>
     )

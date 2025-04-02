@@ -3,6 +3,7 @@ import { Home } from './pages/home/Home';
 import { WeatherPage } from './pages/weather/Weather';
 import { Alerts } from './pages/alerts/Alerts';
 import { NavBar } from './components/Navbar/NavBar';
+import { locationsContext } from './locationsContext';
 import './App.css';
 
 /**
@@ -16,6 +17,7 @@ const App = () => {
   /** @type {'home' | 'weather' | 'alerts'} */
   const [curPage, setCurPage] = useState('weather'); 
   const [searchedCity, setSearchedCity] = useState(null);
+  const [locations, setLocations] = useState([]); 
 
   const renderPage = ()=>{
     switch(curPage) {
@@ -39,9 +41,11 @@ const App = () => {
         <NavBar changePage={setCurPage} setSearchedCity={setSearchedCity}/>
       </header>
 
+    <locationsContext.Provider value={{locations: locations, setLocations: setLocations}}>
       <main>
         {renderPage()} 
       </main>
+    </locationsContext.Provider>
     </div>
   );
 };
