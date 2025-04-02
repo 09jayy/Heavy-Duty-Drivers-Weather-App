@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { SearchModal } from "../../weather/components/SearchModal";
+import { SearchModal } from "../../../components/SearchModal";
 import { fetchWeather } from "../../../functions/fetchWeather";
 import { Plus ,Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 import { AlertLogs } from "./AlertLogs";

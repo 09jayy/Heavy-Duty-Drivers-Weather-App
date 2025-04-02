@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'; 
-import { WeatherWidget } from './components/WeatherWidget';
-import { SearchWidget } from './components/SearchWidget'; 
+import { WeatherWidget } from '../../components/WeatherWidget';
+import { SearchWidget } from '../../components/SearchWidget'; 
 import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';

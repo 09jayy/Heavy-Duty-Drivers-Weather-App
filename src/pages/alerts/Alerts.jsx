@@ -1,5 +1,5 @@
 import React, { useState }from 'react'; 
-import { WeatherWidget } from '../weather/components/WeatherWidget';
+import { WeatherWidget } from '../../components/WeatherWidget';
 import { AlertsWidget } from './components/AlertsWidget';
 
 export const Alerts = () => {
