@@ -20,7 +20,7 @@ const App = () => {
   const renderPage = ()=>{
     switch(curPage) {
       case 'home':
-        return <Home/>
+        return <Home searchedCity={searchedCity}/>
 
       case 'weather':
         return <WeatherPage searchedCity={searchedCity}/>
