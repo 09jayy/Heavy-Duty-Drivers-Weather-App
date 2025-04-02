@@ -11,7 +11,7 @@ export const Alerts = () => {
 
     return (
         <div id='container'>
-               {
+                {
                 locations.map((location,index) => (
                     <AlertsWidget
                         key={index} 
