@@ -1,9 +1,10 @@
-import React, { useState }from 'react'; 
+import React, { useState, useContext }from 'react'; 
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { AlertsWidget } from './components/AlertsWidget';
+import { locationsContext } from '../../locationsContext';
 
 export const Alerts = () => {
-    const [locations, setLocations] = useState(['london']); 
+    const [locations, setLocations] = useContext(locationsContext); 
 
     const addLocation = (newLocation) => {
         setLocations((prev) => [...prev, newLocation]); 

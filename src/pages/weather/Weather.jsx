@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react'; 
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SearchWidget } from '../../components/SearchWidget'; 
-import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';
 import { locationsContext } from '../../locationsContext';
 import { fetchWeather } from '../../functions/fetchWeather';
 import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { addLocation, deleteLocation, moveForward, moveBackward } from '../../functions/locationFunctions';
 
 /**
  * Page Component contains functionality of adding new weather to page in a list 
@@ -26,41 +26,8 @@ export const WeatherPage = ({searchedCity}) => {
     // // whenever searchedCity changes, 
     // // as long as it’s not already in the list.
 
-    const addLocation = async (newLocation) => {
-        try {
-            const data = await fetchWeather(newLocation);
-            setLocations((prev) => [...prev, data]); 
-        } catch (error) {
-            if (error.response) {
-                const statusCode = error.response.status;
-
-                if (statusCode === 404) {
-                setError('City not recognized. Please check the city name and try again.');
-                } else if (statusCode === 500) {
-                setError('Internal Server Error. Please try again later.');
-                } else {
-                setError(`An unexpected error occurred. Status code: ${statusCode}`);
-                }
-            } else if (error.request) {
-                setError('No response from the server. Please check your network connection.');
-            } else {
-                setError('Error in request setup: ' + error.message);
-            }
-            onDeleteLocation(); 
-            console.error('Error:', error.message);
-        }
-    }
-
-    const deleteLocation = (deleteLocation) => {
-        setLocations((prev) => prev.filter((_,index) => index !== deleteLocation)); 
-    }
-
-    const moveForward = (index) => {
-        setLocations((prev) => moveIndexInArray(prev,index, index+1)); 
-    }
-
-    const moveBackward = (index) => {
-        setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
+    const onAddLocation = (newLocation) => {
+        addLocation(newLocation, setLocations, setError); 
     }
 
     return (
@@ -72,9 +39,9 @@ export const WeatherPage = ({searchedCity}) => {
                         <WeatherWidget
                             key={index} 
                             locationData={locationData}
-                            onDeleteLocation={() => deleteLocation(index)}
-                            moveForward={()=>moveForward(index)}
-                            moveBackward={()=>moveBackward(index)}
+                            onDeleteLocation={() => deleteLocation(index, setLocations)}
+                            moveForward={()=>moveForward(index, setLocations)}
+                            moveBackward={()=>moveBackward(index, setLocations)}
                         >
                             <div className="weather-info">
                                 <div className="info-item">
@@ -123,7 +90,7 @@ export const WeatherPage = ({searchedCity}) => {
                         </WeatherWidget>
                     ))
                 }
-                <SearchWidget onAddLocation={addLocation}/>
+                <SearchWidget onAddLocation={onAddLocation}/>
             </div>
         </>
     )
