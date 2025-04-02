@@ -10,11 +10,35 @@ export const Home = ({searchedCity}) => {
     const [currentData, setCurrentData] = useState(null);
     const [city, setCity] = useState(searchedCity || 'London');
     const [unit, setUnit] = useState('metric');
+    const [visibleHours, setVisibleHours] = useState(8);
 
     // Function that converts Celsius to Fahrenheit
     const convertToFahrenheit = (celsius) => {
         return (celsius * 9/5) + 32;
       };
+
+
+    useEffect(() => {
+        const updateVisibleHours = () => {
+            const width = window.innerWidth;
+            if (width < 650) {
+                setVisibleHours(3); // Mobile devices
+            }else if (width < 860) {
+                setVisibleHours(4); // Smallest screens
+            } else if (width < 1450) {
+                setVisibleHours(5); // Tablets
+            } else {
+                setVisibleHours(8); // Default for larger screens
+            }
+        };
+
+        // Run on mount and when window resizes
+        updateVisibleHours();
+        window.addEventListener('resize', updateVisibleHours);
+
+        return () => window.removeEventListener('resize', updateVisibleHours);
+    }, []);
+
     // check if searchedCity is not null and set it to city
     useEffect(() => {
         if (searchedCity) {
@@ -84,7 +108,7 @@ export const Home = ({searchedCity}) => {
     }
 
     const currentTime = new Date().getHours();
-    const forecastList = forecastData.list.slice(0, 8); 
+    const forecastList = forecastData.list.slice(0, visibleHours); 
     const nowForecast = forecastList.find(hour => new Date(hour.dt * 1000).getHours() === currentTime);
     const remainingForecast = forecastList.filter(hour => new Date(hour.dt * 1000).getHours() !== currentTime);
     const hourlyForecast = nowForecast ? [nowForecast, ...remainingForecast] : remainingForecast;

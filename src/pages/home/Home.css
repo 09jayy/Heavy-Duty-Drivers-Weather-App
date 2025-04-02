@@ -89,12 +89,14 @@ body {
 
 
 .Weather-conditions ul {
+    display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 30px;
     width: 100%;
 }
 
@@ -108,12 +110,14 @@ body {
     width: 150px; 
     border-radius: 20px;
     margin-left: 10px;
-    margin-bottom: 4rem;
+
+    font-size: 0.9em;
+    justify-content: center;
 }
 
 .Weather-conditions li img {
-    margin-right: 10px;
-    width: 50px;
+    margin-right: 8px;
+    width: 40px;
 
 }
 
@@ -121,17 +125,20 @@ body {
 .Hourly-forecast {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5em;
     font-weight: bold;
-    padding: 20px;
+    padding: 10px;
     margin: 20px auto; 
     background-color: #7393B3;
     border-radius: 20px;
-    width: 80%; 
+    width: 70%; 
+    text-align: center;
 }
 .Hourly-forecast ul {
+    display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -149,8 +156,8 @@ body {
     min-width: 80px; 
 }
 .Hourly-forecast ul img {
-    width: 50px; 
-    height: 50px;
+    width: 40px; 
+    height: 40px;
     
 }
 .Clock-Icon {
@@ -172,4 +179,76 @@ body {
     display: flex;
     align-items: center; 
     gap: 10px; 
+}
+@media (max-width: 1450) {
+    .home-temperature {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .Feels-Like {
+        font-size: 14px; 
+        margin-right: 0; 
+    }
+
+    .Feels-like-Text {
+        font-size: 1.2em;
+    }
+
+    .Weather-conditions ul {
+        flex-direction: row; 
+        justify-content: center; 
+    }
+
+    .Weather-conditions li {
+        width: 120px; 
+        font-size: 0.75em; 
+    }
+
+    .Hourly-forecast {
+        width: 50%; 
+    }
+
+    .Hourly-forecast ul {
+        gap: 10px; 
+    }
+
+    .Hourly-forecast li {
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 800px) {
+    .home-icon img {
+        width: 60px;
+        height: 60px;
+    }
+
+
+
+    .Hourly-forecast {
+        width: 60%; 
+    }
+
+    .Hourly-forecast li {
+        min-width: 60px;
+    }
+
+    .Weather-conditions li {
+        width: 110px; 
+    }
+    .Hourly-forecast-name {
+        font-size: 0.8em; 
+    }
+}
+@media (max-width: 600px){
+    .Feels-Like {
+        font-size: 0.4em; 
+    }
+    .CurrentTemp {
+        font-size: 2.5em; 
+    }
+    .Hourly-forecast-name {
+        font-size: 0.5em; 
+    }
 }
