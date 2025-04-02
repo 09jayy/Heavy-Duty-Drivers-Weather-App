@@ -37,7 +37,7 @@ const App = () => {
   return (
     <div className="root-container">
       <header>
-        <NavBar changePage={setCurPage} setSearchedCity={setSearchedCity}/>
+        <NavBar changePage={setCurPage} setSearchedCity={setSearchedCity} curPage={curPage}/>
       </header>
 
     <locationsContext.Provider value={{locations: locations, setLocations: setLocations}}>
