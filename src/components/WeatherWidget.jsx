@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { fetchWeather } from "../functions/fetchWeather";
 import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
-export const WeatherWidget = ({city, onDeleteLocation, moveForward, moveBackward, setError, removeLatestLocation}) => {
+export const WeatherWidget = ({city, onDeleteLocation, moveForward, moveBackward, setError}) => {
     const [weatherData, setWeatherData] = useState({});
     const [returnComponent, setReturnComponent] = useState(true); 
 
@@ -29,7 +29,7 @@ export const WeatherWidget = ({city, onDeleteLocation, moveForward, moveBackward
         }
 
         setReturnComponent(false);
-        removeLatestLocation(); 
+        onDeleteLocation(); 
         console.error('Error:', error.message);
       }
     }, [city]);

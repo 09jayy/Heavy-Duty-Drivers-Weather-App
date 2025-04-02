@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react'; 
+import React, {useState, useEffect, useContext} from 'react'; 
 import { WeatherWidget } from '../../components/WeatherWidget';
 import { SearchWidget } from '../../components/SearchWidget'; 
 import { moveIndexInArray } from './functions/weatherFunctions';
 import './Weather.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';
+import { locationsContext } from '../../locationsContext';
 
 /**
  * Page Component contains functionality of adding new weather to page in a list 
@@ -11,17 +12,17 @@ import { ErrorPopup } from '../../components/ErrorPopup';
  */
 export const WeatherPage = ({searchedCity}) => {
     // Accept the prop from app.jsx and set it as the first location
-    const [locations, setLocations] = useState(['london']); 
+    const {locations, setLocations} = useContext(locationsContext); 
     const [error, setError] = useState(''); 
 
-    useEffect(() => {
-        if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
-            setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
-        }
-    }, [searchedCity]);
-    //   will add the searchedCity to the locations list 
-    // whenever searchedCity changes, 
-    // as long as it’s not already in the list.
+    // useEffect(() => {
+    //     if (searchedCity && !locations.includes(searchedCity.toLowerCase())) {
+    //         setLocations((prev) => [...prev, searchedCity.toLowerCase()]);
+    //     }
+    // }, [searchedCity]);
+    // //   will add the searchedCity to the locations list 
+    // // whenever searchedCity changes, 
+    // // as long as it’s not already in the list.
 
     const addLocation = (newLocation) => {
         setLocations((prev) => [...prev, newLocation]); 
@@ -39,10 +40,6 @@ export const WeatherPage = ({searchedCity}) => {
         setLocations((prev) => moveIndexInArray(prev,index, index-1)); 
     }
 
-    const removeLatestLocation = () => {
-        setLocations((prev) => prev.slice(0,prev.length -1)); 
-    }
-
     return (
         <>
             {error && <ErrorPopup message={error} handleClose={() => setError('')}/>}
@@ -53,7 +50,7 @@ export const WeatherPage = ({searchedCity}) => {
                             key={index} 
                             city={location}  
                             setError={setError}
-                            removeLatestLocation={() => removeLatestLocation}
+                            cleanLocationsList={() => cleanLocationsList}
                             onDeleteLocation={() => deleteLocation(index)}
                             moveForward={()=>moveForward(index)}
                             moveBackward={()=>moveBackward(index)}
