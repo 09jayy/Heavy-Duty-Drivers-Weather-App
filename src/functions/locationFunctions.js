@@ -21,6 +21,7 @@ export const addLocation = async (newLocation, setLocations, setError) => {
     try {
         const data = await fetchWeather(newLocation);
         setLocations((prev) => [...prev, data]); 
+        return true; 
     } catch (error) {
         if (error.response) {
             const statusCode = error.response.status;
@@ -38,6 +39,7 @@ export const addLocation = async (newLocation, setLocations, setError) => {
             setError('Error in request setup: ' + error.message);
         } 
         console.error('Error:', error.message);
+        return false; 
     }
 }
 

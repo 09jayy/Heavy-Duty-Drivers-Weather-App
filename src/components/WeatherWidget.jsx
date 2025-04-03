@@ -1,6 +1,9 @@
 import React from "react";
 import { MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
+/**
+ * returns template widget for weather data to be used in overview and alerts pages
+ */
 export const WeatherWidget = ({onDeleteLocation, moveForward, moveBackward, locationData, children}) => {  
   return (
       <div className="weather-card">

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { fetchWeather } from "../../../functions/fetchWeather";
 
+/**
+ * returns alert list depending on weather conditions given 
+ */
 export const AlertLogs = ({ weatherData }) => {
   const [alerts, setAlerts] = useState([]);
   

@@ -7,11 +7,15 @@ import { AlertLogs } from './components/AlertLogs';
 import { ErrorPopup } from '../../components/ErrorPopup';
 
 export const Alerts = () => {
+    // fetch locations from context provider
     const {locations, setLocations} = useContext(locationsContext);  
+    
+    // stores error messages, includes 404 and 500 response codes from api calls
     const [error, setError] = useState(''); 
 
     const onAddLocation = (newLocation) => {
-        addLocation(newLocation, setLocations, setError); 
+        const success = addLocation(newLocation, setLocations, setError);
+        if (success) { setError(''); } 
     }
 
     return (
