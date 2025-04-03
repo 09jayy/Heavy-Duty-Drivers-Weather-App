@@ -10,7 +10,6 @@ export const Weather = ({ city }) => {
     const [unit, setUnit] = useState('metric');
     const [errorLog, setErrorLog] = useState('');
     const [visibleHours, setVisibleHours] = useState(8);
-    const [airPollution, setAirPollution] = useState(null);
 
     if (!city) { city = 'london'; } 
 
@@ -68,25 +67,9 @@ export const Weather = ({ city }) => {
             }
         };
 
-        const fetchAirPollution = async () => {
-            try {
-                const { lon, lat } = weatherData.coord;
-                const response = await fetch(
-                    `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
-
-                );
-                const data = await response.json();
-                setAirPollution(data.list[0].main.aqi);
-            }
-            catch (error) {
-                console.error('Error fetching air pollution data:', error);
-            }
-        };
-
         if (city) {
             fetchWeather();
             fetchForecast();
-            if (weatherData?.coord) {fetchAirPollution()}; 
         }
     }, [city, unit]);
 
