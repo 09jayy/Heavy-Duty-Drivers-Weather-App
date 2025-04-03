@@ -4,18 +4,17 @@ import './Home.css';
 import axios from 'axios';
 
 
-export const Home = ({searchedCity}) => { 
+export const Home = ({city}) => { 
     const apiKey = 'ca7fa4eea17f1ddca4179ea69c71470b';
     const [forecastData, setForecastData] = useState(null);
     const [currentData, setCurrentData] = useState(null);
-    const [city, setCity] = useState(searchedCity || 'London');
     const [unit, setUnit] = useState('metric');
     const [visibleHours, setVisibleHours] = useState(8);
 
     // Function that converts Celsius to Fahrenheit
     const convertToFahrenheit = (celsius) => {
         return (celsius * 9/5) + 32;
-      };
+    };
 
 
     useEffect(() => {
@@ -40,11 +39,11 @@ export const Home = ({searchedCity}) => {
     }, []);
 
     // check if searchedCity is not null and set it to city
-    useEffect(() => {
-        if (searchedCity) {
-            setCity(searchedCity);
-        }
-    }, [searchedCity]);
+    // useEffect(() => {
+    //     if (searchedCity) {
+    //         setCity(searchedCity);
+    //     }
+    // }, [searchedCity]);
 
 
 
@@ -79,10 +78,10 @@ export const Home = ({searchedCity}) => {
     // handle the change between Celsius and Fahrenheit
     const handleUnitChange = (unit) => {
         setUnit(unit);
-         if (searchedCity) {
+        if (searchedCity) {
             fetchWeather(searchedCity);
             fetchForecast(searchedCity);
-      }
+        }
     };
     // function that gets the hours of sunlight
     const getSunlightHours = (sunrise, sunset) => {
@@ -93,7 +92,7 @@ export const Home = ({searchedCity}) => {
         const sunlightHours = Math.floor(sunlightDuration / (1000 * 60 * 60)); 
         // log the hour of the current cities sunset to check.
         console.log(`Sunset time in ${city}: ${sunsetDate.getUTCHours()}:${sunsetDate.getUTCMinutes()}`);
-       
+    
     
         return `${sunlightHours} hours`;
     };
