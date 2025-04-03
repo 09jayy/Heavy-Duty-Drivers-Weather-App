@@ -125,7 +125,7 @@ export const Home = ({ city }) => {
     const nowForecast = forecastList.find(hour => new Date(hour.dt * 1000).getHours() === currentTime);
     const remainingForecast = forecastList.filter(hour => new Date(hour.dt * 1000).getHours() !== currentTime);
     const hourlyForecast = nowForecast ? [nowForecast, ...remainingForecast] : remainingForecast;
-    const sunsetTime = formatSunset(weatherData.sys.sunset); 
+    const sunsetTime = formatSunset(weatherData?.sys.sunset); 
     const feelsLikeTemp = weatherData?.main?.feels_like;
 
     const groupByDay = (data) => {        
