@@ -16,6 +16,7 @@ export const Weather = ({ city }) => {
     // Function that converts Celsius to Fahrenheit
     const convertToFahrenheit = (celsius) => (celsius * 9/5) + 32;
 
+    // adjust the visible hours in hourly forecast depending on screen size
     useEffect(() => {
         const updateVisibleHours = () => {
             const width = window.innerWidth;
@@ -36,6 +37,7 @@ export const Weather = ({ city }) => {
         return () => window.removeEventListener('resize', updateVisibleHours);
     }, []);
 
+    // fetch weather data and forecast data from openweatherapi when city or unit changes, includes error handling
     useEffect(() => {
         const handleApiError = (error) => {
             console.error(error);
@@ -78,9 +80,11 @@ export const Weather = ({ city }) => {
         return `${date.getUTCHours().toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')}`;
     };
 
+    // changes the state variable unit when toggling between celcius and farenheit 
     const handleUnitChange = (newUnit) => {
         setUnit(newUnit);
     };
+
 
     const formatSunset = (timestamp) => {
         const date = new Date(timestamp * 1000);
@@ -111,6 +115,7 @@ export const Weather = ({ city }) => {
     const sunsetTime = formatSunset(weatherData?.sys.sunset); 
     const feelsLikeTemp = weatherData?.main?.feels_like;
 
+    // collects forecast data and returns smaller list of nessesary dates with a correctly formatted date
     const groupByDay = (data) => {        
         const dailyData = {};
         data.list.forEach((item) => {
