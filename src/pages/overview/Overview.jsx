@@ -4,8 +4,7 @@ import { SearchWidget } from '../../components/SearchWidget';
 import './Overview.css'; 
 import { ErrorPopup } from '../../components/ErrorPopup';
 import { locationsContext } from '../../locationsContext';
-import { fetchWeather } from '../../functions/fetchWeather';
-import { Droplets, Thermometer, Wind, MapPin, Trash2, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { Droplets, Thermometer, Wind} from "lucide-react";
 import { addLocation, deleteLocation, moveForward, moveBackward } from '../../functions/locationFunctions';
 
 /**
@@ -15,10 +14,14 @@ import { addLocation, deleteLocation, moveForward, moveBackward } from '../../fu
 export const Overview = () => {
     // Accept the prop from app.jsx and set it as the first location
     const {locations, setLocations} = useContext(locationsContext);  
+    
+    // used to display errors, includes 404 and 500 errors from api requests
     const [error, setError] = useState(''); 
 
+    // define function for adding location to locations list
     const onAddLocation = (newLocation) => {
-        addLocation(newLocation, setLocations, setError); 
+        const success = addLocation(newLocation, setLocations, setError); 
+        if (success) { setError(''); }
     }
 
     return (

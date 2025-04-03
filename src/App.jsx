@@ -15,9 +15,14 @@ import './App.css';
 const App = () => {
   /** @type {'weather' | 'overview' | 'alerts'} */
   const [curPage, setCurPage] = useState('weather'); 
+
+  // state stores city search in search bar located in navbar
   const [searchedCity, setSearchedCity] = useState('');
+
+  // initialise state for location provider context, enables location list to be shared throughout application
   const [locations, setLocations] = useState([]); 
 
+  // return which page to be rendered depending on user selection of page
   const renderPage = ()=>{
     switch(curPage) {
       case 'weather':
