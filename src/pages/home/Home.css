@@ -252,3 +252,71 @@ body {
         font-size: 0.5em; 
     }
 }
+
+.weekly-forecast  {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+} */
+
+h2 {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+    color: white 
+}
+
+ .Weather-conditions-icons {
+    width: 30px; 
+    height: 30px; 
+    object-fit: contain; 
+ }
+
+.Weekly-forecast-name{
+    color: white;
+ 
+}
+
+
+.Weather-conditions-icons {
+    width: 50px;  
+    height: 50px; 
+    text-align: left;
+}
+
+.Weekly-forecast-header {
+    display: flex;              
+    align-items: center;      
+    gap: 10px; 
+    font-size: 0.65em;            
+}
+
+.Weather-icon {
+    width: 30px;              
+    height: 30px;              
+}
+
+.Weekly-forecast-name {
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.Weather-icon{
+    width: 70px;
+    height: 60px;
+
+}
+
+.weekly-forecast {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+    gap: 20px; 
+    margin-left: 77px;
+
+}
