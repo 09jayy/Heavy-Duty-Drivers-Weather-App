@@ -44,7 +44,7 @@ export const Weather = ({ city }) => {
             if (error.response?.status === 404) {
                 setErrorLog('404: City not recognized. Please check the city name and try again.');
             } else if (error.response?.status === 500) {
-                setErrorLog('500: Internal Server Error');
+                setErrorLog('500: Internal Server Error. Please try again later');
             } else {
                 setErrorLog(error.message);
             }
