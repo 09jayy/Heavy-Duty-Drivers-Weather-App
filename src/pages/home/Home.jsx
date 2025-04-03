@@ -5,11 +5,12 @@ import axios from 'axios';
 
 export const Home = ({ city }) => {
     const apiKey = 'ca7fa4eea17f1ddca4179ea69c71470b';
-    const [forecastData, setForecastData] = useState(null);
-    const [currentData, setCurrentData] = useState(null);
+    const [forecastData, setForecastData] = useState([]);
+    const [weatherData, setWeatherData] = useState(null)
     const [unit, setUnit] = useState('metric');
     const [errorLog, setErrorLog] = useState('');
     const [visibleHours, setVisibleHours] = useState(8);
+    const [airPollution, setAirPollution] = useState(null);
 
     if (!city) { city = 'london'; } 
 
@@ -51,7 +52,7 @@ export const Home = ({ city }) => {
         const fetchWeather = async () => {
             try {
                 const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
-                setCurrentData(response.data);
+                setWeatherData(response.data);
                 setErrorLog('');
             } catch (error) {
                 handleApiError(error);
@@ -67,9 +68,25 @@ export const Home = ({ city }) => {
             }
         };
 
+        const fetchAirPollution = async () => {
+            try {
+                const { lon, lat } = weatherData.coord;
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+
+                );
+                const data = await response.json();
+                setAirPollution(data.list[0].main.aqi);
+            }
+            catch (error) {
+                console.error('Error fetching air pollution data:', error);
+            }
+        };
+
         if (city) {
             fetchWeather();
             fetchForecast();
+            if (weatherData?.coord) {fetchAirPollution()}; 
         }
     }, [city, unit]);
 
@@ -80,6 +97,11 @@ export const Home = ({ city }) => {
 
     const handleUnitChange = (newUnit) => {
         setUnit(newUnit);
+    };
+
+    const formatSunset = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+        return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
     };
 
     const getSunlightHours = (sunrise, sunset) => {
@@ -103,12 +125,30 @@ export const Home = ({ city }) => {
     const nowForecast = forecastList.find(hour => new Date(hour.dt * 1000).getHours() === currentTime);
     const remainingForecast = forecastList.filter(hour => new Date(hour.dt * 1000).getHours() !== currentTime);
     const hourlyForecast = nowForecast ? [nowForecast, ...remainingForecast] : remainingForecast;
-    const sunsetTime = fetchLocalTime(currentData?.sys?.sunset, currentData?.timezone);
-    const feelsLikeTemp = currentData?.main?.feels_like;
+    const sunsetTime = formatSunset(weatherData?.sys.sunset); 
+    const feelsLikeTemp = weatherData?.main?.feels_like;
+
+    const groupByDay = (data) => {        
+        const dailyData = {};
+        data.list.forEach((item) => {
+            const date = new Date(item.dt * 1000).toLocaleDateString('en-GB', {month: 'short', day: 'numeric'});
+            if (!dailyData[date]) {
+                dailyData[date] = [];
+            }
+            dailyData[date].push(item);
+        });
+        return Object.entries(dailyData).slice(0, 5);
+    };
+    
+    // Calculate average temperature/new
+    const calculateAverageTemp = (dayData) => {
+        const totalTemp = dayData.reduce((sum, item) => sum + item.main.temp, 0);
+        return Math.round(totalTemp / dayData.length);
+    };
 
     return (
         <div className="home-container">
-            <h1 className='MainText'>{currentData?.name}</h1>
+            <h1 className='MainText'>{weatherData?.name}</h1>
             <div className="home-icon">
                 <img src="/MainWeather.png" alt="Weather Icon" />
             </div>
@@ -118,9 +158,9 @@ export const Home = ({ city }) => {
                 </div>
                 <p className="CurrentTemp">
                     {unit === 'metric' ? (
-                        <span>{Math.round(currentData?.main?.temp)}°C</span>
+                        <span>{Math.round(weatherData?.main?.temp)}°C</span>
                     ) : (
-                        <span>{Math.round(convertToFahrenheit(currentData?.main?.temp))}°F</span>
+                        <span>{Math.round(convertToFahrenheit(weatherData?.main?.temp))}°F</span>
                     )}
                 </p>
                 <ul className='TempOptions'>
@@ -137,26 +177,27 @@ export const Home = ({ city }) => {
                 <ul>
                     <li>
                         <img src="/wind.png" className='Weather-conditions-icons' alt="Wind Icon" />
-                        {currentData?.wind?.speed} m/s
+                        {weatherData?.wind?.speed} m/s
                     </li>
                     <li>
                         <img src="/drop.png" alt="Humidity Icon" />
-                        {currentData?.main?.humidity}%
+                        {weatherData?.main?.humidity}%
                     </li>
                     <li>
                         <img src="/Sunlight.png" alt="Sunlight Icon" />
-                        {getSunlightHours(currentData?.sys?.sunrise, currentData?.sys?.sunset)}
+                        {getSunlightHours(weatherData?.sys?.sunrise, weatherData?.sys?.sunset)}
                     </li>
                 </ul>
             </div>
+            
             <div className='Hourly-forecast'>
                 <div className='Hourly-forecast-header'>
                     <img src="/clock.png" className='Clock-Icon' alt="Clock Icon" />
-                    <h2 className='Hourly-forecast-name'>Hourly Forecast {city}</h2>
+                    <h2 className='Hourly-forecast-name'>Hourly Forecast</h2>
                 </div>
                 <ul>
                     {hourlyForecast.sort((a, b) => a.dt - b.dt).map((hour, index) => {
-                        const localTime = fetchLocalTime(hour.dt, currentData?.timezone);
+                        const localTime = fetchLocalTime(hour.dt, weatherData?.timezone);
                         return (
                             <li key={index}>
                                 <p>{localTime}</p>
@@ -166,6 +207,25 @@ export const Home = ({ city }) => {
                         );
                     })}
                 </ul>
+
+                <div className="Weekly-forecast-header">
+                    <img src="/forcastimage.png" alt="Weather Icon" className="Weather-icon" />
+                    <h2 className="Weekly-forecast-name">Weekly Forecast</h2>
+                </div>
+                <div className="weekly-forecast">
+                    {forecastData?.list && groupByDay(forecastData).map(([date, dayData], index) => {
+                        // formats dates and displays the daily weather details
+                        const formattedDate = date ? date : 'Invalid Date';
+
+                        return (
+                            <div className="daily-forecast" key={index}>
+                                <p>{formattedDate}</p>
+                                <img src='/Weather.png' alt='Weather Icon' className='Weather-conditions-icons' />
+                                <p>{unit === 'metric' ? calculateAverageTemp(dayData) : Math.round(convertToFahrenheit(calculateAverageTemp(dayData)))} {unit === 'metric' ? '°C' : '°F'}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
