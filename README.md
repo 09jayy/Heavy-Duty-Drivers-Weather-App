@@ -27,3 +27,5 @@ npm run dev
 1. Include well documented commit messages within your branch
 1. Push your branch to the remote repository using `git push -u origin <branch-name>`
 1. Navigate to the [GitHub page](https://github.com/09jayy/Heavy-Duty-Drivers-Weather-App) and create a new pull request
+
+
