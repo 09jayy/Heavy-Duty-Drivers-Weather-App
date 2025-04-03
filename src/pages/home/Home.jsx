@@ -189,6 +189,7 @@ export const Home = ({ city }) => {
                     </li>
                 </ul>
             </div>
+            
             <div className='Hourly-forecast'>
                 <div className='Hourly-forecast-header'>
                     <img src="/clock.png" className='Clock-Icon' alt="Clock Icon" />
@@ -206,25 +207,25 @@ export const Home = ({ city }) => {
                         );
                     })}
                 </ul>
-            </div>
-            
-            <div className="Weekly-forecast-header">
-                <img src="/forcastimage.png" alt="Weather Icon" className="Weather-icon" />
-                <h2 className="Weekly-forecast-name">Weekly Forecast {city}</h2>
-            </div>
-            <div className="weekly-forecast">
-                {forecastData?.list && groupByDay(forecastData).map(([date, dayData], index) => {
-                    // formats dates and displays the daily weather details
-                    const formattedDate = date ? date.split('-').reverse().join('/') : 'Invalid Date';
 
-                    return (
-                        <div className="daily-forecast" key={index}>
-                            <p>{formattedDate}</p>
-                            <img src='/Weather.png' alt='Weather Icon' className='Weather-conditions-icons' />
-                            <p>{calculateAverageTemp(dayData)}°C</p>
-                        </div>
-                    );
-                })}
+                <div className="Weekly-forecast-header">
+                    <img src="/forcastimage.png" alt="Weather Icon" className="Weather-icon" />
+                    <h2 className="Weekly-forecast-name">Weekly Forecast {city}</h2>
+                </div>
+                <div className="weekly-forecast">
+                    {forecastData?.list && groupByDay(forecastData).map(([date, dayData], index) => {
+                        // formats dates and displays the daily weather details
+                        const formattedDate = date ? date.split('-').reverse().join('/') : 'Invalid Date';
+
+                        return (
+                            <div className="daily-forecast" key={index}>
+                                <p>{formattedDate}</p>
+                                <img src='/Weather.png' alt='Weather Icon' className='Weather-conditions-icons' />
+                                <p>{calculateAverageTemp(dayData)}°C</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
