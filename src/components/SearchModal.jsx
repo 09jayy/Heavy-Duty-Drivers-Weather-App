@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import './SearchModal.css';
 
+/**
+ * search modal to be opened, to be overlayed on top of document body to be infocus
+ */
 export const SearchModal = ({onClose, onSubmit}) => {
     const [userLocation, setUserLocation] = useState(''); 
 

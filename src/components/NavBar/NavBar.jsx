@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import { Search, AlertTriangle, Grid, Cloud } from 'lucide-react';
 
 export const NavBar = ({curPage,changePage, setSearchedCity}) => {
-  const [searchInput, setSearchInput] = useState('');
-  const navbarBrightnessStrength = 1.4; 
+  const [searchInput, setSearchInput] = useState(''); // search state for top search bar 
+  const navbarBrightnessStrength = 1.4; // brightness for page currently on
 
   const handleSearch = (e) => {
     e.preventDefault(); // stop form from reloading the page
     if (searchInput.trim()) {
       setSearchedCity(searchInput.trim()); // send city to App state
       setSearchInput(''); // clears search after entering 
-      changePage('home'); 
+      changePage('weather'); 
     }
   };
 
