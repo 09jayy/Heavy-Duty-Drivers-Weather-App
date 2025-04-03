@@ -90,7 +90,34 @@ export const Home = ({ city }) => {
         return `${sunlightHours} hours`;
     };
 
+HEAD
     if (errorLog) {
+
+
+// Group data by day/ new
+const groupByDay = (data) => {
+    const dailyData = {};
+    data.list.forEach((item) => {
+        const date = new Date(item.dt * 1000).toLocaleDateString('en-GB');
+        if (!dailyData[date]) {
+            dailyData[date] = [];
+        }
+        dailyData[date].push(item);
+    });
+    return Object.entries(dailyData).slice(0, 5); // Get only 5 days
+};
+
+// Calculate average temperature/new
+const calculateAverageTemp = (dayData) => {
+    const totalTemp = dayData.reduce((sum, item) => sum + item.main.temp, 0);
+    return Math.round(totalTemp / dayData.length);
+};
+
+
+
+
+    if (!currentData || !forecastData || !forecastData.list) {
+
         return (
             <div className='home-container'>
                 <h1>{errorLog}</h1>
@@ -108,7 +135,12 @@ export const Home = ({ city }) => {
 
     return (
         <div className="home-container">
+
             <h1 className='MainText'>{currentData?.name}</h1>
+
+            <h1 className='MainText' >{currentData?.name}</h1>
+  
+
             <div className="home-icon">
                 <img src="/MainWeather.png" alt="Weather Icon" />
             </div>
@@ -166,7 +198,38 @@ export const Home = ({ city }) => {
                         );
                     })}
                 </ul>
+
             </div>
         </div>
     );
 };
+
+                
+                <><div className="Weekly-forecast-header">
+        <img src="/forcastimage.png" alt="Weather Icon" className="Weather-icon" />
+        <h2 className="Weekly-forecast-name">Weekly Forecast {city}</h2>
+    </div><div className="weekly-forecast">
+            {groupByDay(forecastData).map(([date, dayData], index) => {
+                // formats dates and displays the daily weather details
+                const formattedDate = date ? date.split('-').reverse().join('/') : 'Invalid Date';
+
+                return (
+                    <div className="daily-forecast" key={index}>
+                        <p>{formattedDate}</p>
+                        <img src='/Weather.png' alt='Weather Icon' className='Weather-conditions-icons' />
+                        <p>{calculateAverageTemp(dayData)}°C</p>
+                    </div>
+                );
+            })}
+        </div></>
+
+
+
+
+     
+
+};
+
+
+
+
