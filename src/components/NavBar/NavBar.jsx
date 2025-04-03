@@ -20,8 +20,8 @@ export const NavBar = ({curPage,changePage, setSearchedCity}) => {
           <div className="flex items-center">
             <button 
               className="cursor-pointer flex flex-col items-center justify-center gap-1 px-6 py-3 text-light-blue transition-colors duration-200 hover:text-white"
-              onClick={() => changePage('home')}
-              style={curPage === 'home' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
+              onClick={() => changePage('weather')}
+              style={curPage === 'weather' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
             >
               <div className="text-2xl text-[#778DA9]"><Cloud size={24} /></div>
               <span className="text-sm font-light">Weather</span>
@@ -29,8 +29,8 @@ export const NavBar = ({curPage,changePage, setSearchedCity}) => {
             
             <button 
               className="cursor-pointer flex flex-col items-center justify-center gap-1 px-6 py-3 text-light-blue transition-colors duration-200 hover:text-white"
-              onClick={() => changePage('weather')}
-              style={curPage === 'weather' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
+              onClick={() => changePage('overview')}
+              style={curPage === 'overview' ? {filter: `brightness(${navbarBrightnessStrength})`} : {}}
             >
               <div className="text-2xl text-[#778DA9]"><Grid size={24} /></div>
               <span className="text-sm font-light">Overview</span>
