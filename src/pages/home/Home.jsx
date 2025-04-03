@@ -131,7 +131,6 @@ export const Home = ({ city }) => {
     const groupByDay = (data) => {        
         const dailyData = {};
         data.list.forEach((item) => {
-            //const date = new Date(item.dt * 1000).toLocaleDateString('en-GB');
             const date = new Date(item.dt * 1000).toLocaleDateString('en-GB', {month: 'short', day: 'numeric'});
             if (!dailyData[date]) {
                 dailyData[date] = [];
@@ -222,7 +221,7 @@ export const Home = ({ city }) => {
                             <div className="daily-forecast" key={index}>
                                 <p>{formattedDate}</p>
                                 <img src='/Weather.png' alt='Weather Icon' className='Weather-conditions-icons' />
-                                <p>{calculateAverageTemp(dayData)}°C</p>
+                                <p>{unit === 'metric' ? calculateAverageTemp(dayData) : Math.round(convertToFahrenheit(calculateAverageTemp(dayData)))} {unit === 'metric' ? '°C' : '°F'}</p>
                             </div>
                         );
                     })}
