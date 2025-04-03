@@ -131,7 +131,8 @@ export const Home = ({ city }) => {
     const groupByDay = (data) => {        
         const dailyData = {};
         data.list.forEach((item) => {
-            const date = new Date(item.dt * 1000).toLocaleDateString('en-GB');
+            //const date = new Date(item.dt * 1000).toLocaleDateString('en-GB');
+            const date = new Date(item.dt * 1000).toLocaleDateString('en-GB', {month: 'short', day: 'numeric'});
             if (!dailyData[date]) {
                 dailyData[date] = [];
             }
@@ -193,7 +194,7 @@ export const Home = ({ city }) => {
             <div className='Hourly-forecast'>
                 <div className='Hourly-forecast-header'>
                     <img src="/clock.png" className='Clock-Icon' alt="Clock Icon" />
-                    <h2 className='Hourly-forecast-name'>Hourly Forecast {city}</h2>
+                    <h2 className='Hourly-forecast-name'>Hourly Forecast</h2>
                 </div>
                 <ul>
                     {hourlyForecast.sort((a, b) => a.dt - b.dt).map((hour, index) => {
@@ -210,12 +211,12 @@ export const Home = ({ city }) => {
 
                 <div className="Weekly-forecast-header">
                     <img src="/forcastimage.png" alt="Weather Icon" className="Weather-icon" />
-                    <h2 className="Weekly-forecast-name">Weekly Forecast {city}</h2>
+                    <h2 className="Weekly-forecast-name">Weekly Forecast</h2>
                 </div>
                 <div className="weekly-forecast">
                     {forecastData?.list && groupByDay(forecastData).map(([date, dayData], index) => {
                         // formats dates and displays the daily weather details
-                        const formattedDate = date ? date.split('-').reverse().join('/') : 'Invalid Date';
+                        const formattedDate = date ? date : 'Invalid Date';
 
                         return (
                             <div className="daily-forecast" key={index}>
