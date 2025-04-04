@@ -6,6 +6,7 @@ A ReactJS Weather Application catered to heavy-duty drivers.
 
 - Vite + ReactJS
 - Javascript & JSX
+- Tailwind
 
 ## Install Instructions
 
