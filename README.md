@@ -9,6 +9,11 @@ A ReactJS Weather Application catered to heavy-duty drivers.
 
 ## Install Instructions
 
+Prerequisites:
+
+- node installed on local machine
+- npm installed on local machine
+
 ```bash
 git clone https://github.com/09jayy/Heavy-Duty-Drivers-Weather-App
 cd Heavy-Duty-Drivers-Weather-App
